@@ -19,7 +19,7 @@ COPY . .
 
 # 開発用ステージ
 FROM base AS development
-EXPOSE 3001
+EXPOSE 3002
 CMD ["pnpm", "--filter", "@sensilog/api", "dev"]
 
 # ビルド用ステージ
@@ -51,6 +51,6 @@ RUN adduser -S nextjs -u 1001
 
 USER nextjs
 
-EXPOSE 3001
+EXPOSE 3002
 
 CMD ["node", "apps/api/dist/server.js"]
