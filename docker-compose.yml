@@ -40,10 +40,10 @@ services:
       - JWT_SECRET=development-jwt-secret-minimum-32-characters
       - NODE_ENV=development
       - LOG_LEVEL=info
-      - PORT=3001
+      - PORT=3002
       - HOST=0.0.0.0
     ports:
-      - "3001:3001"
+      - "3002:3002"
     depends_on:
       - postgres
       - redis
@@ -61,7 +61,7 @@ services:
       dockerfile: apps/web/Dockerfile
     container_name: sensilog-web
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - NEXT_PUBLIC_API_URL=http://localhost:3002
       - NEXT_PUBLIC_ENVIRONMENT=development
     ports:
       - "3000:3000"
