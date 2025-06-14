@@ -1,7 +1,12 @@
 'use client';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiUtils } from '@sensilog/api-client';
+import {
+  apiUtils,
+  postAuthRiotCallback,
+  getAuthMe,
+  getAuthRiotLogin,
+} from '@sensilog/api-client';
 import { useState, useEffect } from 'react';
 
 export interface AuthUser {
@@ -33,21 +38,7 @@ export function useAuth() {
         throw new Error('No auth token');
       }
 
-      // TODO: API clientが生成されたらこちらを使用
-      // return await getAuthMe();
-      
-      // 仮の実装
-      const response = await fetch('/api/auth/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error('Authentication failed');
-      }
-      
-      return response.json();
+      return await getAuthMe();
     },
     enabled: !!apiUtils.getAuthToken(),
     retry: false,
@@ -57,25 +48,7 @@ export function useAuth() {
   // ログイン処理
   const loginMutation = useMutation({
     mutationFn: async (credentials: { code: string; state?: string }) => {
-      // TODO: API clientが生成されたらこちらを使用
-      // return await postAuthRiotCallback(credentials);
-      
-      // 仮の実装
-      const response = await fetch('/api/auth/riot/callback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-      
-      const data = await response.json();
-      apiUtils.setAuthToken(data.token);
-      return data;
+      return await postAuthRiotCallback(credentials);
     },
     onSuccess: (data) => {
       // ユーザー情報をキャッシュに設定
@@ -121,16 +94,11 @@ export function useAuth() {
   }, [user, isLoading, refetch]);
 
   // Riot OAuth認証URL取得
-  const getRiotAuthUrl = async (): Promise<{ authUrl: string; state: string }> => {
-    // TODO: API clientが生成されたらこちらを使用
-    // return await getAuthRiotLogin();
-    
-    // 仮の実装
-    const response = await fetch('/api/auth/riot/login');
-    if (!response.ok) {
-      throw new Error('Failed to get auth URL');
-    }
-    return response.json();
+  const getRiotAuthUrl = async (): Promise<{
+    authUrl: string;
+    state: string;
+  }> => {
+    return await getAuthRiotLogin();
   };
 
   return {

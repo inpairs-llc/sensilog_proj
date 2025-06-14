@@ -43,7 +43,7 @@ function MockAuthContent() {
 
   const handleLogin = (userIndex: number) => {
     const user = MOCK_USERS[userIndex];
-    if (!user || !state) return;
+    if (!user || !state) return;login
 
     setSelectedUser(userIndex);
     

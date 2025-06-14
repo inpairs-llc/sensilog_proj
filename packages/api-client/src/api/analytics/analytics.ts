@@ -18,17 +18,21 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 import type {
-  ComparisonResult,
+  GetAnalyticsCorrelation200,
+  GetAnalyticsCorrelationParams,
   GetAnalyticsPerformance200,
   GetAnalyticsPerformanceParams,
+  PostAnalyticsComparison200,
   PostAnalyticsComparisonBody,
-} from ".././schemas";
-import getAnalyticsPerformanceMutator from ".././mutator";
-import postAnalyticsComparisonMutator from ".././mutator";
+} from "../../schemas";
+import getAnalyticsPerformanceMutator from "../../mutator";
+import postAnalyticsComparisonMutator from "../../mutator";
+import getAnalyticsCorrelationMutator from "../../mutator";
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 /**
+ * 指定されたメトリクスのパフォーマンス分析データを取得します
  * @summary パフォーマンス分析データ取得
  */
 export const getAnalyticsPerformance = (
@@ -193,13 +197,14 @@ export const useGetAnalyticsPerformance = <
 };
 
 /**
+ * 2つの期間のパフォーマンスを比較分析します
  * @summary 期間比較分析
  */
 export const postAnalyticsComparison = (
   postAnalyticsComparisonBody: PostAnalyticsComparisonBody,
   options?: SecondParameter<typeof postAnalyticsComparisonMutator>,
 ) => {
-  return postAnalyticsComparisonMutator<ComparisonResult>(
+  return postAnalyticsComparisonMutator<PostAnalyticsComparison200>(
     {
       url: `/analytics/comparison`,
       method: "POST",
@@ -270,4 +275,168 @@ export const usePostAnalyticsComparison = <
   const mutationOptions = getPostAnalyticsComparisonMutationOptions(options);
 
   return useMutation(mutationOptions);
+};
+/**
+ * 設定変更とパフォーマンス変化の相関を分析します
+ * @summary 設定とパフォーマンスの相関分析
+ */
+export const getAnalyticsCorrelation = (
+  params: GetAnalyticsCorrelationParams,
+  options?: SecondParameter<typeof getAnalyticsCorrelationMutator>,
+  signal?: AbortSignal,
+) => {
+  return getAnalyticsCorrelationMutator<GetAnalyticsCorrelation200>(
+    { url: `/analytics/correlation`, method: "GET", params, signal },
+    options,
+  );
+};
+
+export const getGetAnalyticsCorrelationQueryKey = (
+  params: GetAnalyticsCorrelationParams,
+) => {
+  return [`/analytics/correlation`, ...(params ? [params] : [])] as const;
+};
+
+export const getGetAnalyticsCorrelationInfiniteQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+  TError = unknown,
+>(
+  params: GetAnalyticsCorrelationParams,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof getAnalyticsCorrelationMutator>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetAnalyticsCorrelationQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAnalyticsCorrelation>>
+  > = ({ signal }) => getAnalyticsCorrelation(params, requestOptions, signal);
+
+  return {
+    queryKey,
+    queryFn,
+    retry: 1,
+    refetchOnWindowFocus: false,
+    staleTime: 120000,
+    ...queryOptions,
+  } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetAnalyticsCorrelationInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAnalyticsCorrelation>>
+>;
+export type GetAnalyticsCorrelationInfiniteQueryError = unknown;
+
+/**
+ * @summary 設定とパフォーマンスの相関分析
+ */
+export const useGetAnalyticsCorrelationInfinite = <
+  TData = Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+  TError = unknown,
+>(
+  params: GetAnalyticsCorrelationParams,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof getAnalyticsCorrelationMutator>;
+  },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getGetAnalyticsCorrelationInfiniteQueryOptions(
+    params,
+    options,
+  );
+
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
+    TData,
+    TError
+  > & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
+
+export const getGetAnalyticsCorrelationQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+  TError = unknown,
+>(
+  params: GetAnalyticsCorrelationParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof getAnalyticsCorrelationMutator>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetAnalyticsCorrelationQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAnalyticsCorrelation>>
+  > = ({ signal }) => getAnalyticsCorrelation(params, requestOptions, signal);
+
+  return {
+    queryKey,
+    queryFn,
+    retry: 1,
+    refetchOnWindowFocus: false,
+    staleTime: 120000,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetAnalyticsCorrelationQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAnalyticsCorrelation>>
+>;
+export type GetAnalyticsCorrelationQueryError = unknown;
+
+/**
+ * @summary 設定とパフォーマンスの相関分析
+ */
+export const useGetAnalyticsCorrelation = <
+  TData = Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+  TError = unknown,
+>(
+  params: GetAnalyticsCorrelationParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsCorrelation>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof getAnalyticsCorrelationMutator>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getGetAnalyticsCorrelationQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
 };

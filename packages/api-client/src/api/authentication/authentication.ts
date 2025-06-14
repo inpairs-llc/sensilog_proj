@@ -18,22 +18,22 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 import type {
-  BadRequestResponse,
+  GetAuthMe200,
   GetAuthRiotLogin200,
   PostAuthRefresh200,
   PostAuthRiotCallback200,
+  PostAuthRiotCallback400,
   PostAuthRiotCallbackBody,
-  UnauthorizedResponse,
-  User,
-} from ".././schemas";
-import getAuthRiotLoginMutator from ".././mutator";
-import postAuthRiotCallbackMutator from ".././mutator";
-import postAuthRefreshMutator from ".././mutator";
-import getAuthMeMutator from ".././mutator";
+} from "../../schemas";
+import getAuthRiotLoginMutator from "../../mutator";
+import postAuthRiotCallbackMutator from "../../mutator";
+import postAuthRefreshMutator from "../../mutator";
+import getAuthMeMutator from "../../mutator";
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 /**
+ * Riot Gamesアカウントでの認証を開始します（開発環境ではモック認証）
  * @summary Riot OAuth認証開始
  */
 export const getAuthRiotLogin = (
@@ -178,6 +178,7 @@ export const useGetAuthRiotLogin = <
 };
 
 /**
+ * Riot認証サーバーからのコールバックを処理します
  * @summary Riot OAuth認証コールバック
  */
 export const postAuthRiotCallback = (
@@ -196,7 +197,7 @@ export const postAuthRiotCallback = (
 };
 
 export const getPostAuthRiotCallbackMutationOptions = <
-  TError = BadRequestResponse | UnauthorizedResponse,
+  TError = PostAuthRiotCallback400,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -230,15 +231,13 @@ export type PostAuthRiotCallbackMutationResult = NonNullable<
   Awaited<ReturnType<typeof postAuthRiotCallback>>
 >;
 export type PostAuthRiotCallbackMutationBody = PostAuthRiotCallbackBody;
-export type PostAuthRiotCallbackMutationError =
-  | BadRequestResponse
-  | UnauthorizedResponse;
+export type PostAuthRiotCallbackMutationError = PostAuthRiotCallback400;
 
 /**
  * @summary Riot OAuth認証コールバック
  */
 export const usePostAuthRiotCallback = <
-  TError = BadRequestResponse | UnauthorizedResponse,
+  TError = PostAuthRiotCallback400,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -259,7 +258,8 @@ export const usePostAuthRiotCallback = <
   return useMutation(mutationOptions);
 };
 /**
- * @summary トークンリフレッシュ
+ * JWTトークンを新しいものに更新します
+ * @summary JWTトークンリフレッシュ
  */
 export const postAuthRefresh = (
   options?: SecondParameter<typeof postAuthRefreshMutator>,
@@ -271,7 +271,7 @@ export const postAuthRefresh = (
 };
 
 export const getPostAuthRefreshMutationOptions = <
-  TError = UnauthorizedResponse,
+  TError = unknown,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -303,13 +303,13 @@ export type PostAuthRefreshMutationResult = NonNullable<
   Awaited<ReturnType<typeof postAuthRefresh>>
 >;
 
-export type PostAuthRefreshMutationError = UnauthorizedResponse;
+export type PostAuthRefreshMutationError = unknown;
 
 /**
- * @summary トークンリフレッシュ
+ * @summary JWTトークンリフレッシュ
  */
 export const usePostAuthRefresh = <
-  TError = UnauthorizedResponse,
+  TError = unknown,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -330,13 +330,14 @@ export const usePostAuthRefresh = <
   return useMutation(mutationOptions);
 };
 /**
+ * 認証済みユーザーの情報を取得します
  * @summary ユーザー情報取得
  */
 export const getAuthMe = (
   options?: SecondParameter<typeof getAuthMeMutator>,
   signal?: AbortSignal,
 ) => {
-  return getAuthMeMutator<User>(
+  return getAuthMeMutator<GetAuthMe200>(
     { url: `/auth/me`, method: "GET", signal },
     options,
   );
@@ -348,7 +349,7 @@ export const getGetAuthMeQueryKey = () => {
 
 export const getGetAuthMeInfiniteQueryOptions = <
   TData = Awaited<ReturnType<typeof getAuthMe>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(options?: {
   query?: UseInfiniteQueryOptions<
     Awaited<ReturnType<typeof getAuthMe>>,
@@ -382,14 +383,14 @@ export const getGetAuthMeInfiniteQueryOptions = <
 export type GetAuthMeInfiniteQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAuthMe>>
 >;
-export type GetAuthMeInfiniteQueryError = UnauthorizedResponse;
+export type GetAuthMeInfiniteQueryError = unknown;
 
 /**
  * @summary ユーザー情報取得
  */
 export const useGetAuthMeInfinite = <
   TData = Awaited<ReturnType<typeof getAuthMe>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(options?: {
   query?: UseInfiniteQueryOptions<
     Awaited<ReturnType<typeof getAuthMe>>,
@@ -412,7 +413,7 @@ export const useGetAuthMeInfinite = <
 
 export const getGetAuthMeQueryOptions = <
   TData = Awaited<ReturnType<typeof getAuthMe>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getAuthMe>>, TError, TData>;
   request?: SecondParameter<typeof getAuthMeMutator>;
@@ -440,14 +441,14 @@ export const getGetAuthMeQueryOptions = <
 export type GetAuthMeQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAuthMe>>
 >;
-export type GetAuthMeQueryError = UnauthorizedResponse;
+export type GetAuthMeQueryError = unknown;
 
 /**
  * @summary ユーザー情報取得
  */
 export const useGetAuthMe = <
   TData = Awaited<ReturnType<typeof getAuthMe>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getAuthMe>>, TError, TData>;
   request?: SecondParameter<typeof getAuthMeMutator>;

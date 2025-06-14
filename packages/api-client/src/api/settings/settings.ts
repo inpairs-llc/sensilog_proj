@@ -18,26 +18,29 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 import type {
-  BadRequestResponse,
-  CreateSettingsRecord,
+  DeleteSettingsRecordsId404,
   GetSettingsRecords200,
+  GetSettingsRecordsId200,
+  GetSettingsRecordsId404,
   GetSettingsRecordsParams,
   GetSettingsSuggestions200,
-  NotFoundResponse,
-  SettingsRecord,
-  UnauthorizedResponse,
-  UpdateSettingsRecord,
-} from ".././schemas";
-import getSettingsRecordsMutator from ".././mutator";
-import postSettingsRecordsMutator from ".././mutator";
-import getSettingsRecordsIdMutator from ".././mutator";
-import putSettingsRecordsIdMutator from ".././mutator";
-import deleteSettingsRecordsIdMutator from ".././mutator";
-import getSettingsSuggestionsMutator from ".././mutator";
+  PostSettingsRecords201,
+  PostSettingsRecordsBody,
+  PutSettingsRecordsId200,
+  PutSettingsRecordsId404,
+  PutSettingsRecordsIdBody,
+} from "../../schemas";
+import getSettingsRecordsMutator from "../../mutator";
+import postSettingsRecordsMutator from "../../mutator";
+import getSettingsRecordsIdMutator from "../../mutator";
+import putSettingsRecordsIdMutator from "../../mutator";
+import deleteSettingsRecordsIdMutator from "../../mutator";
+import getSettingsSuggestionsMutator from "../../mutator";
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 /**
+ * ユーザーの設定記録一覧を取得します
  * @summary 設定記録一覧取得
  */
 export const getSettingsRecords = (
@@ -59,7 +62,7 @@ export const getGetSettingsRecordsQueryKey = (
 
 export const getGetSettingsRecordsInfiniteQueryOptions = <
   TData = Awaited<ReturnType<typeof getSettingsRecords>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(
   params?: GetSettingsRecordsParams,
   options?: {
@@ -97,14 +100,14 @@ export const getGetSettingsRecordsInfiniteQueryOptions = <
 export type GetSettingsRecordsInfiniteQueryResult = NonNullable<
   Awaited<ReturnType<typeof getSettingsRecords>>
 >;
-export type GetSettingsRecordsInfiniteQueryError = UnauthorizedResponse;
+export type GetSettingsRecordsInfiniteQueryError = unknown;
 
 /**
  * @summary 設定記録一覧取得
  */
 export const useGetSettingsRecordsInfinite = <
   TData = Awaited<ReturnType<typeof getSettingsRecords>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(
   params?: GetSettingsRecordsParams,
   options?: {
@@ -133,7 +136,7 @@ export const useGetSettingsRecordsInfinite = <
 
 export const getGetSettingsRecordsQueryOptions = <
   TData = Awaited<ReturnType<typeof getSettingsRecords>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(
   params?: GetSettingsRecordsParams,
   options?: {
@@ -171,14 +174,14 @@ export const getGetSettingsRecordsQueryOptions = <
 export type GetSettingsRecordsQueryResult = NonNullable<
   Awaited<ReturnType<typeof getSettingsRecords>>
 >;
-export type GetSettingsRecordsQueryError = UnauthorizedResponse;
+export type GetSettingsRecordsQueryError = unknown;
 
 /**
  * @summary 設定記録一覧取得
  */
 export const useGetSettingsRecords = <
   TData = Awaited<ReturnType<typeof getSettingsRecords>>,
-  TError = UnauthorizedResponse,
+  TError = unknown,
 >(
   params?: GetSettingsRecordsParams,
   options?: {
@@ -202,45 +205,46 @@ export const useGetSettingsRecords = <
 };
 
 /**
+ * 新しい設定記録を作成します
  * @summary 設定記録作成
  */
 export const postSettingsRecords = (
-  createSettingsRecord: CreateSettingsRecord,
+  postSettingsRecordsBody: PostSettingsRecordsBody,
   options?: SecondParameter<typeof postSettingsRecordsMutator>,
 ) => {
-  return postSettingsRecordsMutator<SettingsRecord>(
+  return postSettingsRecordsMutator<PostSettingsRecords201>(
     {
       url: `/settings/records`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      data: createSettingsRecord,
+      data: postSettingsRecordsBody,
     },
     options,
   );
 };
 
 export const getPostSettingsRecordsMutationOptions = <
-  TError = BadRequestResponse | UnauthorizedResponse,
+  TError = unknown,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postSettingsRecords>>,
     TError,
-    { data: CreateSettingsRecord },
+    { data: PostSettingsRecordsBody },
     TContext
   >;
   request?: SecondParameter<typeof postSettingsRecordsMutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postSettingsRecords>>,
   TError,
-  { data: CreateSettingsRecord },
+  { data: PostSettingsRecordsBody },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postSettingsRecords>>,
-    { data: CreateSettingsRecord }
+    { data: PostSettingsRecordsBody }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -253,29 +257,27 @@ export const getPostSettingsRecordsMutationOptions = <
 export type PostSettingsRecordsMutationResult = NonNullable<
   Awaited<ReturnType<typeof postSettingsRecords>>
 >;
-export type PostSettingsRecordsMutationBody = CreateSettingsRecord;
-export type PostSettingsRecordsMutationError =
-  | BadRequestResponse
-  | UnauthorizedResponse;
+export type PostSettingsRecordsMutationBody = PostSettingsRecordsBody;
+export type PostSettingsRecordsMutationError = unknown;
 
 /**
  * @summary 設定記録作成
  */
 export const usePostSettingsRecords = <
-  TError = BadRequestResponse | UnauthorizedResponse,
+  TError = unknown,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postSettingsRecords>>,
     TError,
-    { data: CreateSettingsRecord },
+    { data: PostSettingsRecordsBody },
     TContext
   >;
   request?: SecondParameter<typeof postSettingsRecordsMutator>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof postSettingsRecords>>,
   TError,
-  { data: CreateSettingsRecord },
+  { data: PostSettingsRecordsBody },
   TContext
 > => {
   const mutationOptions = getPostSettingsRecordsMutationOptions(options);
@@ -283,6 +285,7 @@ export const usePostSettingsRecords = <
   return useMutation(mutationOptions);
 };
 /**
+ * 指定された設定記録の詳細を取得します
  * @summary 設定記録詳細取得
  */
 export const getSettingsRecordsId = (
@@ -290,7 +293,7 @@ export const getSettingsRecordsId = (
   options?: SecondParameter<typeof getSettingsRecordsIdMutator>,
   signal?: AbortSignal,
 ) => {
-  return getSettingsRecordsIdMutator<SettingsRecord>(
+  return getSettingsRecordsIdMutator<GetSettingsRecordsId200>(
     { url: `/settings/records/${id}`, method: "GET", signal },
     options,
   );
@@ -302,7 +305,7 @@ export const getGetSettingsRecordsIdQueryKey = (id: string) => {
 
 export const getGetSettingsRecordsIdInfiniteQueryOptions = <
   TData = Awaited<ReturnType<typeof getSettingsRecordsId>>,
-  TError = UnauthorizedResponse | NotFoundResponse,
+  TError = GetSettingsRecordsId404,
 >(
   id: string,
   options?: {
@@ -341,16 +344,14 @@ export const getGetSettingsRecordsIdInfiniteQueryOptions = <
 export type GetSettingsRecordsIdInfiniteQueryResult = NonNullable<
   Awaited<ReturnType<typeof getSettingsRecordsId>>
 >;
-export type GetSettingsRecordsIdInfiniteQueryError =
-  | UnauthorizedResponse
-  | NotFoundResponse;
+export type GetSettingsRecordsIdInfiniteQueryError = GetSettingsRecordsId404;
 
 /**
  * @summary 設定記録詳細取得
  */
 export const useGetSettingsRecordsIdInfinite = <
   TData = Awaited<ReturnType<typeof getSettingsRecordsId>>,
-  TError = UnauthorizedResponse | NotFoundResponse,
+  TError = GetSettingsRecordsId404,
 >(
   id: string,
   options?: {
@@ -376,7 +377,7 @@ export const useGetSettingsRecordsIdInfinite = <
 
 export const getGetSettingsRecordsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getSettingsRecordsId>>,
-  TError = UnauthorizedResponse | NotFoundResponse,
+  TError = GetSettingsRecordsId404,
 >(
   id: string,
   options?: {
@@ -415,16 +416,14 @@ export const getGetSettingsRecordsIdQueryOptions = <
 export type GetSettingsRecordsIdQueryResult = NonNullable<
   Awaited<ReturnType<typeof getSettingsRecordsId>>
 >;
-export type GetSettingsRecordsIdQueryError =
-  | UnauthorizedResponse
-  | NotFoundResponse;
+export type GetSettingsRecordsIdQueryError = GetSettingsRecordsId404;
 
 /**
  * @summary 設定記録詳細取得
  */
 export const useGetSettingsRecordsId = <
   TData = Awaited<ReturnType<typeof getSettingsRecordsId>>,
-  TError = UnauthorizedResponse | NotFoundResponse,
+  TError = GetSettingsRecordsId404,
 >(
   id: string,
   options?: {
@@ -448,46 +447,47 @@ export const useGetSettingsRecordsId = <
 };
 
 /**
+ * 指定された設定記録を更新します
  * @summary 設定記録更新
  */
 export const putSettingsRecordsId = (
   id: string,
-  updateSettingsRecord: UpdateSettingsRecord,
+  putSettingsRecordsIdBody: PutSettingsRecordsIdBody,
   options?: SecondParameter<typeof putSettingsRecordsIdMutator>,
 ) => {
-  return putSettingsRecordsIdMutator<SettingsRecord>(
+  return putSettingsRecordsIdMutator<PutSettingsRecordsId200>(
     {
       url: `/settings/records/${id}`,
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      data: updateSettingsRecord,
+      data: putSettingsRecordsIdBody,
     },
     options,
   );
 };
 
 export const getPutSettingsRecordsIdMutationOptions = <
-  TError = BadRequestResponse | UnauthorizedResponse | NotFoundResponse,
+  TError = PutSettingsRecordsId404,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putSettingsRecordsId>>,
     TError,
-    { id: string; data: UpdateSettingsRecord },
+    { id: string; data: PutSettingsRecordsIdBody },
     TContext
   >;
   request?: SecondParameter<typeof putSettingsRecordsIdMutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof putSettingsRecordsId>>,
   TError,
-  { id: string; data: UpdateSettingsRecord },
+  { id: string; data: PutSettingsRecordsIdBody },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof putSettingsRecordsId>>,
-    { id: string; data: UpdateSettingsRecord }
+    { id: string; data: PutSettingsRecordsIdBody }
   > = (props) => {
     const { id, data } = props ?? {};
 
@@ -500,30 +500,27 @@ export const getPutSettingsRecordsIdMutationOptions = <
 export type PutSettingsRecordsIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof putSettingsRecordsId>>
 >;
-export type PutSettingsRecordsIdMutationBody = UpdateSettingsRecord;
-export type PutSettingsRecordsIdMutationError =
-  | BadRequestResponse
-  | UnauthorizedResponse
-  | NotFoundResponse;
+export type PutSettingsRecordsIdMutationBody = PutSettingsRecordsIdBody;
+export type PutSettingsRecordsIdMutationError = PutSettingsRecordsId404;
 
 /**
  * @summary 設定記録更新
  */
 export const usePutSettingsRecordsId = <
-  TError = BadRequestResponse | UnauthorizedResponse | NotFoundResponse,
+  TError = PutSettingsRecordsId404,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putSettingsRecordsId>>,
     TError,
-    { id: string; data: UpdateSettingsRecord },
+    { id: string; data: PutSettingsRecordsIdBody },
     TContext
   >;
   request?: SecondParameter<typeof putSettingsRecordsIdMutator>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof putSettingsRecordsId>>,
   TError,
-  { id: string; data: UpdateSettingsRecord },
+  { id: string; data: PutSettingsRecordsIdBody },
   TContext
 > => {
   const mutationOptions = getPutSettingsRecordsIdMutationOptions(options);
@@ -531,6 +528,7 @@ export const usePutSettingsRecordsId = <
   return useMutation(mutationOptions);
 };
 /**
+ * 指定された設定記録を削除します
  * @summary 設定記録削除
  */
 export const deleteSettingsRecordsId = (
@@ -544,7 +542,7 @@ export const deleteSettingsRecordsId = (
 };
 
 export const getDeleteSettingsRecordsIdMutationOptions = <
-  TError = UnauthorizedResponse | NotFoundResponse,
+  TError = DeleteSettingsRecordsId404,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -578,15 +576,13 @@ export type DeleteSettingsRecordsIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof deleteSettingsRecordsId>>
 >;
 
-export type DeleteSettingsRecordsIdMutationError =
-  | UnauthorizedResponse
-  | NotFoundResponse;
+export type DeleteSettingsRecordsIdMutationError = DeleteSettingsRecordsId404;
 
 /**
  * @summary 設定記録削除
  */
 export const useDeleteSettingsRecordsId = <
-  TError = UnauthorizedResponse | NotFoundResponse,
+  TError = DeleteSettingsRecordsId404,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -607,6 +603,7 @@ export const useDeleteSettingsRecordsId = <
   return useMutation(mutationOptions);
 };
 /**
+ * デバイス名などの入力サジェストを取得します
  * @summary 設定入力サジェスト取得
  */
 export const getSettingsSuggestions = (

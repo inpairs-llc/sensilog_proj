@@ -1,13 +1,13 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 // 環境に応じたベースURL
 const getBaseURL = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // ブラウザ環境
-    return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
   }
   // サーバー環境
-  return process.env.API_URL || 'http://localhost:3001';
+  return process.env.API_URL || "http://localhost:3001";
 };
 
 // Axiosインスタンス作成
@@ -15,27 +15,27 @@ export const customInstance = axios.create({
   baseURL: getBaseURL(),
   timeout: 30000, // 30秒
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // トークン管理
 const getAuthToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('authToken');
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("authToken");
   }
   return null;
 };
 
 const setAuthToken = (token: string): void => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('authToken', token);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("authToken", token);
   }
 };
 
 const removeAuthToken = (): void => {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('authToken');
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("authToken");
   }
 };
 
@@ -49,19 +49,19 @@ customInstance.interceptors.request.use(
     }
 
     // デバッグログ（開発環境のみ）
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.log(
         `🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`,
       );
       if (config.data) {
-        console.log('📤 Request Data:', config.data);
+        console.log("📤 Request Data:", config.data);
       }
     }
 
     return config;
   },
   (error) => {
-    console.error('❌ Request Error:', error);
+    console.error("❌ Request Error:", error);
     return Promise.reject(error);
   },
 );
@@ -70,18 +70,18 @@ customInstance.interceptors.request.use(
 customInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     // デバッグログ（開発環境のみ）
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.log(
         `✅ API Response: ${response.status} ${response.config.method?.toUpperCase()} ${response.config.url}`,
       );
-      console.log('📥 Response Data:', response.data);
+      console.log("📥 Response Data:", response.data);
     }
 
     return response;
   },
   (error) => {
     // エラーログ
-    console.error('❌ API Error:', {
+    console.error("❌ API Error:", {
       status: error.response?.status,
       statusText: error.response?.statusText,
       url: error.config?.url,
@@ -95,21 +95,21 @@ customInstance.interceptors.response.use(
       removeAuthToken();
 
       // ログインページにリダイレクト（ブラウザ環境のみ）
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         // React Router や Next.js Router を使用する場合は適切にリダイレクト
-        window.location.href = '/login';
+        window.location.href = "/login";
       }
     }
 
     // レート制限エラー処理
     if (error.response?.status === 429) {
-      const retryAfter = error.response.headers['retry-after'];
+      const retryAfter = error.response.headers["retry-after"];
       console.warn(`⏰ Rate limited. Retry after ${retryAfter} seconds`);
     }
 
     // ネットワークエラー処理
-    if (error.code === 'NETWORK_ERROR' || error.code === 'ECONNREFUSED') {
-      console.error('🌐 Network Error: Unable to connect to the API');
+    if (error.code === "NETWORK_ERROR" || error.code === "ECONNREFUSED") {
+      console.error("🌐 Network Error: Unable to connect to the API");
     }
 
     return Promise.reject(error);
@@ -131,7 +131,7 @@ export default <T = any>(
 
   // @ts-ignore - Orvalが期待する形式
   promise.cancel = () => {
-    source.cancel('Query was cancelled');
+    source.cancel("Query was cancelled");
   };
 
   return promise;
@@ -146,12 +146,12 @@ export const apiUtils = {
   // 手動でトークンをリフレッシュ
   async refreshToken(): Promise<boolean> {
     try {
-      const response = await customInstance.post('/auth/refresh');
+      const response = await customInstance.post("/auth/refresh");
       const { token } = response.data;
       setAuthToken(token);
       return true;
     } catch (error) {
-      console.error('Token refresh failed:', error);
+      console.error("Token refresh failed:", error);
       removeAuthToken();
       return false;
     }
@@ -160,10 +160,10 @@ export const apiUtils = {
   // API接続テスト
   async testConnection(): Promise<boolean> {
     try {
-      await customInstance.get('/health');
+      await customInstance.get("/health");
       return true;
     } catch (error) {
-      console.error('API connection test failed:', error);
+      console.error("API connection test failed:", error);
       return false;
     }
   },
@@ -176,7 +176,7 @@ export const apiUtils = {
     if (error.message) {
       return error.message;
     }
-    return 'An unexpected error occurred';
+    return "An unexpected error occurred";
   },
 
   // エラーコードの抽出

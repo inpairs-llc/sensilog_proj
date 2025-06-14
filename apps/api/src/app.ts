@@ -56,7 +56,7 @@ export async function buildApp(opts: FastifyServerOptions = {}) {
           url:
             process.env.NODE_ENV === 'production'
               ? 'https://api.sensilog.com'
-              : `http://localhost:${process.env.PORT || 3001}`,
+              : `http://localhost:${process.env.PORT || 3002}`,
           description:
             process.env.NODE_ENV === 'production'
               ? 'Production'
