@@ -20,7 +20,9 @@
     "db:migrate": "cd apps/api && pnpm prisma migrate dev",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "deploy": "pnpm build --filter=web && firebase deploy --only hosting",
+    "deploy:preview": "pnpm build --filter=web && firebase hosting:channel:deploy preview"
   },
   "devDependencies": {
     "turbo": "^1.10.0",

@@ -115,3 +115,15 @@ Thumbs.db
 # Generated API client
 packages/api-client/src/api.ts
 packages/api-client/src/schemas/
+
+# Firebase
+.firebase/
+.firebaserc
+
+# Prisma
+apps/api/prisma/*.db
+apps/api/prisma/*.db-journal
+
+# Generated files
+apps/web/out/
+packages/api-client/src/generated/

@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // transpilePackages: ["@sensilog/api-client"], // TODO: Enable when API client is ready
+  output: 'export',
+  transpilePackages: ["@sensilog/api-client"],
   
   // 環境変数設定
   env: {
@@ -11,8 +12,9 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
   },
 
-  // 画像最適化設定
+  // 画像最適化設定 (static exportでは無効)
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
