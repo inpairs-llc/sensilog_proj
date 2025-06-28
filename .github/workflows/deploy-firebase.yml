@@ -4,21 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'apps/web/**'
-      - 'packages/**'
-      - 'firebase.json'
-      - '.firebaserc'
-      - '.github/workflows/deploy-firebase.yml'
   pull_request:
     branches:
       - main
-    paths:
-      - 'apps/web/**'
-      - 'packages/**'
-      - 'firebase.json'
-      - '.firebaserc'
-      - '.github/workflows/deploy-firebase.yml'
 
 jobs:
   build-and-deploy:
