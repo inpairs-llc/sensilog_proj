@@ -27,9 +27,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
     
     return {
-      userId: payload.sub,
-      email: payload.email,
-      isAdmin: payload.isAdmin,
+      id: user.id,
+      email: user.email,
+      gameName: user.gameName,
+      tagLine: user.tagLine,
+      riotPuuid: user.riotPuuid,
+      isAdmin: user.isAdmin,
     };
   }
 }

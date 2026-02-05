@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiUtils } from '@/lib/api-client/mutator/custom-instance';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export interface AuthUser {
   id: string;
@@ -11,13 +11,28 @@ export interface AuthUser {
   tagLine?: string;
   riotPuuid?: string;
   isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
+
+interface AuthResponse {
+  accessToken: string;
+  user: AuthUser;
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export function useAuth() {
   const queryClient = useQueryClient();
   const [isInitialized, setIsInitialized] = useState(false);
+  const [hasToken, setHasToken] = useState(false);
+
+  // クライアントサイドでのみトークンをチェック
+  useEffect(() => {
+    const token = apiUtils.getAuthToken();
+    setHasToken(!!token);
+    setIsInitialized(true);
+  }, []);
 
   // 認証状態の確認
   const {
@@ -33,35 +48,43 @@ export function useAuth() {
         throw new Error('No auth token');
       }
 
-      // TODO: API clientが生成されたら復元
-      // return await getAuthMe();
-      throw new Error('API client not generated yet');
+      const response = await fetch(`${API_URL}/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch user');
+      }
+
+      return response.json();
     },
-    enabled: !!apiUtils.getAuthToken(),
+    enabled: isInitialized && hasToken,
     retry: false,
     staleTime: 30 * 60 * 1000, // 30分
   });
 
-  // ログイン処理
-  const loginMutation = useMutation({
-    mutationFn: async () => {
-      // TODO: API clientが生成されたら復元
-      // return await postAuthRiotCallback(credentials);
-      throw new Error('API client not generated yet');
-    },
-    onSuccess: (data: { user: AuthUser }) => {
-      // ユーザー情報をキャッシュに設定
-      queryClient.setQueryData(['auth', 'me'], data?.user);
-      // 他のクエリを無効化
-      queryClient.invalidateQueries({ queryKey: ['settings'] });
-      queryClient.invalidateQueries({ queryKey: ['match-data'] });
-    },
-  });
+  // Riot OAuth認証URLへリダイレクト
+  const startRiotLogin = useCallback(async () => {
+    try {
+      const response = await fetch(`${API_URL}/auth/riot/auth-url`);
+      if (!response.ok) {
+        throw new Error('Failed to get auth URL');
+      }
+      const data = await response.json();
+      window.location.href = data.authUrl;
+    } catch (error) {
+      console.error('Failed to start Riot login:', error);
+      throw error;
+    }
+  }, []);
 
   // ログアウト処理
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      apiUtils.removeAuthToken();
+      apiUtils.clearAuth();
+      setHasToken(false);
     },
     onSuccess: () => {
       // 全てのクエリキャッシュをクリア
@@ -72,61 +95,60 @@ export function useAuth() {
   // トークンリフレッシュ
   const refreshMutation = useMutation({
     mutationFn: async () => {
-      // TODO: リフレッシュトークン実装
-      return false;
+      const refreshToken = apiUtils.getRefreshToken();
+      if (!refreshToken) {
+        throw new Error('No refresh token');
+      }
+
+      const response = await fetch(`${API_URL}/auth/refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refreshToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to refresh token');
+      }
+
+      const data: AuthResponse = await response.json();
+      apiUtils.setAuthToken(data.accessToken);
+      setHasToken(true);
+      return data;
     },
-    onSuccess: (success) => {
-      if (success) {
+    onSuccess: (data) => {
+      if (data) {
+        queryClient.setQueryData(['auth', 'me'], data.user);
         refetch();
-      } else {
-        logoutMutation.mutate();
       }
     },
+    onError: () => {
+      logoutMutation.mutate();
+    },
   });
-
-  // 初期化処理
-  useEffect(() => {
-    const token = apiUtils.getAuthToken();
-    if (token && !user && !isLoading) {
-      refetch();
-    }
-    setIsInitialized(true);
-  }, [user, isLoading, refetch]);
-
-  // Riot OAuth認証URL取得
-  const getRiotAuthUrl = async (): Promise<{
-    authUrl: string;
-    state: string;
-  }> => {
-    // TODO: API clientが生成されたら復元
-    // return await getAuthRiotLogin();
-    throw new Error('API client not generated yet');
-  };
 
   return {
     // 状態
     user,
     isAuthenticated: !!user,
-    isLoading: !isInitialized || isLoading,
+    isLoading: !isInitialized || (hasToken && isLoading),
     error,
 
     // アクション
-    login: loginMutation.mutate,
+    startRiotLogin,
     logout: logoutMutation.mutate,
     refresh: refreshMutation.mutate,
-    getRiotAuthUrl,
 
     // ローディング状態
-    isLoggingIn: loginMutation.isPending,
     isLoggingOut: logoutMutation.isPending,
     isRefreshing: refreshMutation.isPending,
 
     // エラー
-    loginError: loginMutation.error as Error | null,
     logoutError: logoutMutation.error as Error | null,
     refreshError: refreshMutation.error as Error | null,
 
     // リセット
-    resetLoginError: loginMutation.reset,
+    refetch,
   };
 }

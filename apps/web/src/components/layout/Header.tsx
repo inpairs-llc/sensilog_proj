@@ -1,9 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { User, LogOut, Settings, ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { User, LogOut, Settings, ChevronDown, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,14 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useAuth } from "@/hooks/useAuth"
 
 export function Header() {
   const pathname = usePathname()
-  const [user] = useState({
-    gameName: "Player",
-    tagLine: "1234",
-    avatar: null
-  })
+  const router = useRouter()
+  const { user, isAuthenticated, isLoading, startRiotLogin, logout, isLoggingOut } = useAuth()
 
   const navItems = [
     { href: "/dashboard", label: "Dashboard" },
@@ -56,7 +53,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          {user ? (
+          {isAuthenticated && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-9 w-auto px-2">
@@ -84,20 +81,45 @@ export function Header() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Account Settings</span>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Account Settings</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem 
+                  className="text-destructive cursor-pointer"
+                  disabled={isLoggingOut}
+                  onClick={() => {
+                    logout()
+                    router.push('/')
+                  }}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
+                  <span>{isLoggingOut ? 'ログアウト中...' : 'ログアウト'}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild>
-              <Link href="/auth/login">Login with Riot</Link>
+            <Button 
+              onClick={startRiotLogin}
+              disabled={isLoading}
+              className="bg-[#D13639] hover:bg-[#B82E31] text-white disabled:opacity-50"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  読み込み中...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                  Riot IDでログイン
+                </>
+              )}
             </Button>
           )}
         </div>
