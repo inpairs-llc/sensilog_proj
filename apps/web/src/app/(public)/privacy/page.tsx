@@ -1,8 +1,8 @@
-"use client"
+'use client';
 
-import { Layout } from "@/components/layout/Layout"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Layout } from '@/components/layout/Layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PrivacyPage() {
   return (
@@ -94,12 +94,13 @@ export default function PrivacyPage() {
                   本サービスは、Riot Games APIを使用してVALORANTのゲームデータを取得しています。
                 </p>
                 <p className="mt-4">
-                  <strong>重要：</strong>本サービスはRiot Gamesが承認したものではなく、
-                  Riot Gamesまたは公式にRiot Gamesとパートナーシップを結んでいる者とは関係ありません。
+                  <strong>重要：</strong>本サービスはRiot Gamesが承認したものではなく、 Riot
+                  Gamesまたは公式にRiot Gamesとパートナーシップを結んでいる者とは関係ありません。
                   VALORANTおよびRiot Gamesは、Riot Games, Inc.の商標または登録商標です。
                 </p>
                 <p className="mt-4">
-                  Riot Sign-On（RSO）を通じて認証を行う場合、お客様はRiot Gamesの利用規約に同意することになります。
+                  Riot Sign-On（RSO）を通じて認証を行う場合、お客様はRiot
+                  Gamesの利用規約に同意することになります。
                 </p>
               </CardContent>
             </Card>
@@ -207,12 +208,14 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  SensiLog (&quot;the Service&quot;) respects your privacy and is committed to protecting your personal information.
-                  This Privacy Policy explains what information we collect and how we use it.
+                  SensiLog (&quot;the Service&quot;) respects your privacy and is committed to
+                  protecting your personal information. This Privacy Policy explains what
+                  information we collect and how we use it.
                 </p>
                 <p className="mt-4">
-                  This Service complies with Japan&apos;s Act on the Protection of Personal Information (APPI) and related laws,
-                  and handles your personal information appropriately.
+                  This Service complies with Japan&apos;s Act on the Protection of Personal
+                  Information (APPI) and related laws, and handles your personal information
+                  appropriately.
                 </p>
                 <p className="mt-4">
                   By using the Service, you agree to the terms of this Privacy Policy.
@@ -272,16 +275,16 @@ export default function PrivacyPage() {
                 <CardTitle>4. Riot Games API</CardTitle>
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
-                <p>
-                  The Service uses the Riot Games API to retrieve VALORANT game data.
+                <p>The Service uses the Riot Games API to retrieve VALORANT game data.</p>
+                <p className="mt-4">
+                  <strong>Important:</strong> This Service is not endorsed by Riot Games and does
+                  not reflect the views or opinions of Riot Games or anyone officially involved in
+                  producing or managing Riot Games properties. Riot Games and VALORANT are
+                  trademarks or registered trademarks of Riot Games, Inc.
                 </p>
                 <p className="mt-4">
-                  <strong>Important:</strong> This Service is not endorsed by Riot Games and does not reflect
-                  the views or opinions of Riot Games or anyone officially involved in producing or managing
-                  Riot Games properties. Riot Games and VALORANT are trademarks or registered trademarks of Riot Games, Inc.
-                </p>
-                <p className="mt-4">
-                  When authenticating through Riot Sign-On (RSO), you agree to Riot Games&apos; Terms of Service.
+                  When authenticating through Riot Sign-On (RSO), you agree to Riot Games&apos;
+                  Terms of Service.
                 </p>
               </CardContent>
             </Card>
@@ -292,19 +295,21 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  This Service operates on an <strong>opt-in basis</strong>.
-                  This means that a player&apos;s game data and statistics will only be displayed
-                  if the player has voluntarily registered (signed up) for this Service.
+                  This Service operates on an <strong>opt-in basis</strong>. This means that a
+                  player&apos;s game data and statistics will only be displayed if the player has
+                  voluntarily registered (signed up) for this Service.
                 </p>
                 <p className="mt-4">
-                  <strong>Important:</strong> Information of players who have not registered for this Service
-                  will not be made available to other users.
-                  This applies to our website, applications, and all related services.
+                  <strong>Important:</strong> Information of players who have not registered for
+                  this Service will not be made available to other users. This applies to our
+                  website, applications, and all related services.
                 </p>
                 <ul className="list-disc pl-6 space-y-1 mt-4">
                   <li>Players consent to data visibility by registering for this Service</li>
                   <li>Data of unregistered players cannot be searched or displayed</li>
-                  <li>Players can stop data visibility at any time by canceling their registration</li>
+                  <li>
+                    Players can stop data visibility at any time by canceling their registration
+                  </li>
                 </ul>
               </CardContent>
             </Card>
@@ -315,7 +320,8 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  We do not sell, rent, or share your personal information with third parties, except in the following circumstances:
+                  We do not sell, rent, or share your personal information with third parties,
+                  except in the following circumstances:
                 </p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>With your consent</li>
@@ -331,8 +337,9 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  Your data is retained for as long as necessary to provide the Service.
-                  If you delete your account, all associated data will be deleted within a reasonable timeframe.
+                  Your data is retained for as long as necessary to provide the Service. If you
+                  delete your account, all associated data will be deleted within a reasonable
+                  timeframe.
                 </p>
               </CardContent>
             </Card>
@@ -343,8 +350,9 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  We implement appropriate technical and organizational measures to protect your information.
-                  However, no method of transmission over the Internet or electronic storage is completely secure.
+                  We implement appropriate technical and organizational measures to protect your
+                  information. However, no method of transmission over the Internet or electronic
+                  storage is completely secure.
                 </p>
               </CardContent>
             </Card>
@@ -372,7 +380,8 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  If you have any questions or concerns about this Privacy Policy, please contact us at:
+                  If you have any questions or concerns about this Privacy Policy, please contact us
+                  at:
                 </p>
                 <p className="mt-4">
                   <strong>Email:</strong> sensilog_sup@e-sportsgg.com
@@ -383,5 +392,5 @@ export default function PrivacyPage() {
         </Tabs>
       </div>
     </Layout>
-  )
+  );
 }

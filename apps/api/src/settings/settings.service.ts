@@ -27,17 +27,17 @@ export class SettingsService {
     const setting = await this.prisma.settingsRecord.findFirst({
       where: { id, userId },
     });
-    
+
     if (!setting) {
       throw new NotFoundException('Settings record not found');
     }
-    
+
     return setting;
   }
 
   async update(id: string, userId: string, updateSettingsDto: UpdateSettingsDto) {
-    const setting = await this.findOne(id, userId);
-    
+    await this.findOne(id, userId);
+
     return this.prisma.settingsRecord.update({
       where: { id },
       data: updateSettingsDto,
@@ -45,8 +45,8 @@ export class SettingsService {
   }
 
   async remove(id: string, userId: string) {
-    const setting = await this.findOne(id, userId);
-    
+    await this.findOne(id, userId);
+
     return this.prisma.settingsRecord.delete({
       where: { id },
     });
@@ -108,19 +108,17 @@ export class SettingsService {
     ];
 
     return {
-      mice: [...new Set([
-        ...defaultMice,
-        ...mice.map(m => m.mouseDevice).filter(Boolean),
-      ])],
-      keyboards: [...new Set([
-        ...defaultKeyboards,
-        ...keyboards.map(k => k.keyboardDevice).filter(Boolean),
-      ])],
-      mousepads: [...new Set([
-        ...defaultMousepads,
-        ...mousepads.map(m => m.mousepad).filter(Boolean),
-      ])],
-      tags: tags.map(t => t.name),
+      mice: [...new Set([...defaultMice, ...mice.map((m) => m.mouseDevice).filter(Boolean)])],
+      keyboards: [
+        ...new Set([
+          ...defaultKeyboards,
+          ...keyboards.map((k) => k.keyboardDevice).filter(Boolean),
+        ]),
+      ],
+      mousepads: [
+        ...new Set([...defaultMousepads, ...mousepads.map((m) => m.mousepad).filter(Boolean)]),
+      ],
+      tags: tags.map((t) => t.name),
     };
   }
 }

@@ -1,10 +1,9 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { User, LogOut, Settings, ChevronDown } from "lucide-react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { User, LogOut, Settings, ChevronDown, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,22 +11,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Header() {
-  const pathname = usePathname()
-  const [user] = useState({
-    gameName: "Player",
-    tagLine: "1234",
-    avatar: null
-  })
+  const pathname = usePathname();
+  const router = useRouter();
+  const { user, isAuthenticated, isLoading, startRiotLogin, logout, isLoggingOut } = useAuth();
 
   const navItems = [
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/settings", label: "Settings" },
-    { href: "/matches", label: "Matches" },
-    { href: "/analytics", label: "Analytics" },
-  ]
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/settings', label: 'Settings' },
+    { href: '/matches', label: 'Matches' },
+    { href: '/analytics', label: 'Analytics' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,7 +44,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               className={`transition-colors hover:text-foreground/80 ${
-                pathname === item.href ? "text-foreground" : "text-foreground/60"
+                pathname === item.href ? 'text-foreground' : 'text-foreground/60'
               }`}
             >
               {item.label}
@@ -56,7 +53,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          {user ? (
+          {isAuthenticated && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-9 w-auto px-2">
@@ -78,30 +75,53 @@ export function Header() {
                     <p className="text-sm font-medium leading-none">
                       {user.gameName}#{user.tagLine}
                     </p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      Riot Account
-                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">Riot Account</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Account Settings</span>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Account Settings</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem
+                  className="text-destructive cursor-pointer"
+                  disabled={isLoggingOut}
+                  onClick={() => {
+                    logout();
+                    router.push('/');
+                  }}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
+                  <span>{isLoggingOut ? 'ログアウト中...' : 'ログアウト'}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild>
-              <Link href="/auth/login">Login with Riot</Link>
+            <Button
+              onClick={startRiotLogin}
+              disabled={isLoading}
+              className="bg-[#D13639] hover:bg-[#B82E31] text-white disabled:opacity-50"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  読み込み中...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                  Riot IDでログイン
+                </>
+              )}
             </Button>
           )}
         </div>
       </div>
     </header>
-  )
+  );
 }

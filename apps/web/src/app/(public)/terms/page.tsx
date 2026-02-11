@@ -1,8 +1,8 @@
-"use client"
+'use client';
 
-import { Layout } from "@/components/layout/Layout"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Layout } from '@/components/layout/Layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function TermsPage() {
   return (
@@ -56,8 +56,11 @@ export default function TermsPage() {
                 <p className="mt-4">
                   <strong>オプトインポリシー：</strong>本サービスはオプトイン方式を採用しています。
                   プレイヤーが自ら本サービスに登録した場合にのみ、そのプレイヤーのデータが表示されます。
-                  未登録のプレイヤーの情報は公開されません。
-                  詳細は<a href="/privacy" className="text-primary hover:underline">プライバシーポリシー</a>をご確認ください。
+                  未登録のプレイヤーの情報は公開されません。 詳細は
+                  <a href="/privacy" className="text-primary hover:underline">
+                    プライバシーポリシー
+                  </a>
+                  をご確認ください。
                 </p>
               </CardContent>
             </Card>
@@ -105,8 +108,8 @@ export default function TermsPage() {
                   著作権法およびその他の知的財産法により保護されています。
                 </p>
                 <p className="mt-4">
-                  VALORANT、Riot Games、およびそれらに関連するすべての商標は、
-                  Riot Games, Inc.の所有物です。
+                  VALORANT、Riot Games、およびそれらに関連するすべての商標は、 Riot Games,
+                  Inc.の所有物です。
                 </p>
               </CardContent>
             </Card>
@@ -117,8 +120,9 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  <strong>Riot Gamesとの関係：</strong>本サービスはRiot Gamesが承認したものではなく、
-                  Riot Gamesまたは公式にRiot Gamesとパートナーシップを結んでいる者とは関係ありません。
+                  <strong>Riot Gamesとの関係：</strong>本サービスはRiot
+                  Gamesが承認したものではなく、 Riot Gamesまたは公式にRiot
+                  Gamesとパートナーシップを結んでいる者とは関係ありません。
                 </p>
                 <p className="mt-4">
                   <strong>無保証：</strong>本サービスは「現状のまま」提供され、
@@ -126,8 +130,8 @@ export default function TermsPage() {
                   本サービスの利用はお客様自身の責任において行ってください。
                 </p>
                 <p className="mt-4">
-                  <strong>データの正確性：</strong>Riot Games APIから取得したデータの正確性について、
-                  当方は保証しません。
+                  <strong>データの正確性：</strong>Riot Games
+                  APIから取得したデータの正確性について、 当方は保証しません。
                 </p>
               </CardContent>
             </Card>
@@ -174,9 +178,7 @@ export default function TermsPage() {
                 <CardTitle>10. お問い合わせ</CardTitle>
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
-                <p>
-                  本規約に関するご質問やご意見は、以下の連絡先までお願いいたします：
-                </p>
+                <p>本規約に関するご質問やご意見は、以下の連絡先までお願いいたします：</p>
                 <p className="mt-4">
                   <strong>Email:</strong> sensilog_sup@e-sportsgg.com
                 </p>
@@ -191,9 +193,9 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  Thank you for using SensiLog (&quot;the Service&quot;).
-                  These Terms of Service (&quot;Terms&quot;) govern your use of the Service.
-                  By using the Service, you agree to be bound by these Terms.
+                  Thank you for using SensiLog (&quot;the Service&quot;). These Terms of Service
+                  (&quot;Terms&quot;) govern your use of the Service. By using the Service, you
+                  agree to be bound by these Terms.
                 </p>
                 <h4 className="text-lg font-semibold mt-4">Operator Information</h4>
                 <ul className="list-disc pl-6 space-y-1">
@@ -209,8 +211,8 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  The Service is a sensitivity settings management and performance analysis tool for VALORANT players.
-                  Key features include:
+                  The Service is a sensitivity settings management and performance analysis tool for
+                  VALORANT players. Key features include:
                 </p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Recording and managing mouse sensitivity and device settings</li>
@@ -219,10 +221,14 @@ export default function TermsPage() {
                   <li>Tracking settings history</li>
                 </ul>
                 <p className="mt-4">
-                  <strong>Opt-In Policy:</strong> This Service operates on an opt-in basis.
-                  Player data is only displayed when the player has voluntarily registered for this Service.
-                  Information of unregistered players will not be made available.
-                  Please refer to our <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a> for details.
+                  <strong>Opt-In Policy:</strong> This Service operates on an opt-in basis. Player
+                  data is only displayed when the player has voluntarily registered for this
+                  Service. Information of unregistered players will not be made available. Please
+                  refer to our{' '}
+                  <a href="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </a>{' '}
+                  for details.
                 </p>
               </CardContent>
             </Card>
@@ -234,10 +240,12 @@ export default function TermsPage() {
               <CardContent className="prose prose-invert max-w-none">
                 <p>
                   Some features of the Service require authentication through Riot Sign-On (RSO).
-                  You are responsible for maintaining the confidentiality of your account and for all activities that occur under your account.
+                  You are responsible for maintaining the confidentiality of your account and for
+                  all activities that occur under your account.
                 </p>
                 <p className="mt-4">
-                  Please notify us immediately if you discover any unauthorized use or access to your account.
+                  Please notify us immediately if you discover any unauthorized use or access to
+                  your account.
                 </p>
               </CardContent>
             </Card>
@@ -249,7 +257,9 @@ export default function TermsPage() {
               <CardContent className="prose prose-invert max-w-none">
                 <p>The following activities are prohibited when using the Service:</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li>Unauthorized access or attempts to gain unauthorized access to the Service</li>
+                  <li>
+                    Unauthorized access or attempts to gain unauthorized access to the Service
+                  </li>
                   <li>Scraping, crawling, or automated data collection from the Service</li>
                   <li>Reverse engineering, decompiling, or disassembling the Service</li>
                   <li>Illegal activities using the Service</li>
@@ -266,10 +276,12 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  All content, features, and design included in the Service are protected by copyright and other intellectual property laws.
+                  All content, features, and design included in the Service are protected by
+                  copyright and other intellectual property laws.
                 </p>
                 <p className="mt-4">
-                  VALORANT, Riot Games, and all related trademarks are the property of Riot Games, Inc.
+                  VALORANT, Riot Games, and all related trademarks are the property of Riot Games,
+                  Inc.
                 </p>
               </CardContent>
             </Card>
@@ -280,13 +292,18 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  <strong>Relationship with Riot Games:</strong> This Service is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties.
+                  <strong>Relationship with Riot Games:</strong> This Service is not endorsed by
+                  Riot Games and does not reflect the views or opinions of Riot Games or anyone
+                  officially involved in producing or managing Riot Games properties.
                 </p>
                 <p className="mt-4">
-                  <strong>No Warranty:</strong> The Service is provided &quot;as is&quot; without any warranties of any kind, either express or implied. Your use of the Service is at your own risk.
+                  <strong>No Warranty:</strong> The Service is provided &quot;as is&quot; without
+                  any warranties of any kind, either express or implied. Your use of the Service is
+                  at your own risk.
                 </p>
                 <p className="mt-4">
-                  <strong>Data Accuracy:</strong> We do not guarantee the accuracy of data retrieved from the Riot Games API.
+                  <strong>Data Accuracy:</strong> We do not guarantee the accuracy of data retrieved
+                  from the Riot Games API.
                 </p>
               </CardContent>
             </Card>
@@ -297,7 +314,9 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use or inability to use the Service.
+                  To the maximum extent permitted by law, we shall not be liable for any indirect,
+                  incidental, special, consequential, or punitive damages arising out of or relating
+                  to your use or inability to use the Service.
                 </p>
               </CardContent>
             </Card>
@@ -308,9 +327,9 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  We reserve the right to modify, suspend, or terminate the Service at any time without notice.
-                  These Terms may be updated from time to time.
-                  We will notify you of significant changes through the Service.
+                  We reserve the right to modify, suspend, or terminate the Service at any time
+                  without notice. These Terms may be updated from time to time. We will notify you
+                  of significant changes through the Service.
                 </p>
               </CardContent>
             </Card>
@@ -321,8 +340,9 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="prose prose-invert max-w-none">
                 <p>
-                  These Terms shall be governed by and construed in accordance with the laws of Japan.
-                  Any disputes relating to these Terms shall be subject to the exclusive jurisdiction of the Tokyo District Court.
+                  These Terms shall be governed by and construed in accordance with the laws of
+                  Japan. Any disputes relating to these Terms shall be subject to the exclusive
+                  jurisdiction of the Tokyo District Court.
                 </p>
               </CardContent>
             </Card>
@@ -344,5 +364,5 @@ export default function TermsPage() {
         </Tabs>
       </div>
     </Layout>
-  )
+  );
 }

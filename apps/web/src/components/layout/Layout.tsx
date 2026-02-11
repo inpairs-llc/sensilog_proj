@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import { ReactNode } from "react"
-import { Header } from "./Header"
-import { Sidebar } from "./Sidebar"
-import { Footer } from "./Footer"
+import { ReactNode } from 'react';
+import { Header } from './Header';
+import { Sidebar } from './Sidebar';
+import { Footer } from './Footer';
 
 interface LayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
@@ -16,12 +16,10 @@ export function Layout({ children }: LayoutProps) {
       <div className="flex flex-1">
         <Sidebar />
         <main className="flex-1 ml-64 p-6">
-          <div className="mx-auto max-w-7xl">
-            {children}
-          </div>
+          <div className="mx-auto max-w-7xl">{children}</div>
         </main>
       </div>
       <Footer />
     </div>
-  )
+  );
 }

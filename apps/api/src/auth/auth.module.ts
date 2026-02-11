@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RiotService } from './riot.service';
 
 @Module({
   imports: [
@@ -19,8 +20,8 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
+  providers: [AuthService, RiotService, JwtStrategy, JwtAuthGuard],
   controllers: [AuthController],
-  exports: [AuthService, JwtAuthGuard],
+  exports: [AuthService, RiotService, JwtAuthGuard],
 })
 export class AuthModule {}

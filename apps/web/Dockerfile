@@ -12,15 +12,10 @@ COPY apps/web/package.json ./apps/web/
 COPY packages/api-client/package.json ./packages/api-client/
 
 # 依存関係をインストール
-RUN pnpm install --force
+RUN pnpm install --frozen-lockfile
 
 # ソースコードをコピー
 COPY . .
-
-# 開発用ステージ
-FROM base AS development
-EXPOSE 3000
-CMD ["pnpm", "--filter", "@sensilog/web", "dev"]
 
 # ビルド用ステージ
 FROM base AS builder
@@ -34,41 +29,28 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_ADSENSE_CLIENT_ID=$NEXT_PUBLIC_ADSENSE_CLIENT_ID
 ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
 
-# API Clientを生成
-RUN pnpm generate:api
-
 # Next.jsアプリをビルド
 RUN pnpm --filter "@sensilog/web" build
 
-# 本番用ステージ
+# 本番用ステージ（standalone）
 FROM node:20-alpine AS production
 
-RUN npm install -g pnpm
-
 WORKDIR /app
-
-# 本番用依存関係のみインストール
-COPY package.json pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
-COPY apps/web/package.json ./apps/web/
-
-RUN pnpm install --force
-
-# ビルド成果物をコピー
-COPY --from=builder /app/apps/web/.next ./apps/web/.next
-COPY --from=builder /app/apps/web/public ./apps/web/public
-COPY --from=builder /app/apps/web/next.config.ts ./apps/web/
-COPY --from=builder /app/apps/web/package.json ./apps/web/
 
 # 非rootユーザーを作成
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
-# .nextディレクトリの所有者を変更
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next ./apps/web/.next
+# standalone出力をコピー
+COPY --from=builder /app/apps/web/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "@sensilog/web", "start"]
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["node", "apps/web/server.js"]

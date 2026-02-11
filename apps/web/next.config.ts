@@ -2,8 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export',
-  
+  output: 'standalone',
+
   // 環境変数設定
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
@@ -11,9 +11,8 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
   },
 
-  // 画像最適化設定 (static exportでは無効)
+  // 画像最適化設定
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -23,7 +22,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
 
   // Experimental features
   experimental: {

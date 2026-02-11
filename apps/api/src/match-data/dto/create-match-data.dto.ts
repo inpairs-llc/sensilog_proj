@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, IsDateString, IsOptional, Min, Max } from 'class-validator';
+import { IsString, IsNumber, IsBoolean, IsDateString, IsOptional, Min } from 'class-validator';
 
 export class CreateMatchDataDto {
   @IsString()

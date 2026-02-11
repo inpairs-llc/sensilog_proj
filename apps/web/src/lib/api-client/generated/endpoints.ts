@@ -5,7 +5,7 @@
  * VALORANT sensitivity and performance tracking API
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   MutationFunction,
   QueryFunction,
@@ -14,15 +14,10 @@ import type {
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
-} from "@tanstack/react-query";
-import type {
-  CreateMatchDataDto,
-  CreateSettingsDto,
-  UpdateSettingsDto,
-} from "./models";
-import { customInstance } from "../mutator/custom-instance";
-import type { ErrorType, BodyType } from "../mutator/custom-instance";
-
+} from '@tanstack/react-query';
+import type { CreateMatchDataDto, CreateSettingsDto, UpdateSettingsDto } from './models';
+import { customInstance } from '../mutator/custom-instance';
+import type { ErrorType, BodyType } from '../mutator/custom-instance';
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
@@ -30,7 +25,7 @@ export const appControllerGetHello = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>({ url: `/`, method: "GET", signal }, options);
+  return customInstance<void>({ url: `/`, method: 'GET', signal }, options);
 };
 
 export const getAppControllerGetHelloQueryKey = () => {
@@ -41,20 +36,15 @@ export const getAppControllerGetHelloQueryOptions = <
   TData = Awaited<ReturnType<typeof appControllerGetHello>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof appControllerGetHello>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getAppControllerGetHelloQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof appControllerGetHello>>
-  > = ({ signal }) => appControllerGetHello(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof appControllerGetHello>>> = ({ signal }) =>
+    appControllerGetHello(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof appControllerGetHello>>,
@@ -72,11 +62,7 @@ export const useAppControllerGetHello = <
   TData = Awaited<ReturnType<typeof appControllerGetHello>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof appControllerGetHello>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getAppControllerGetHelloQueryOptions(options);
@@ -94,10 +80,7 @@ export const appControllerHealth = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/health`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/health`, method: 'GET', signal }, options);
 };
 
 export const getAppControllerHealthQueryKey = () => {
@@ -108,20 +91,15 @@ export const getAppControllerHealthQueryOptions = <
   TData = Awaited<ReturnType<typeof appControllerHealth>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof appControllerHealth>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof appControllerHealth>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getAppControllerHealthQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof appControllerHealth>>
-  > = ({ signal }) => appControllerHealth(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof appControllerHealth>>> = ({ signal }) =>
+    appControllerHealth(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof appControllerHealth>>,
@@ -139,11 +117,7 @@ export const useAppControllerHealth = <
   TData = Awaited<ReturnType<typeof appControllerHealth>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof appControllerHealth>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof appControllerHealth>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getAppControllerHealthQueryOptions(options);
@@ -161,10 +135,7 @@ export const authControllerRiotLogin = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/auth/riot/login`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/auth/riot/login`, method: 'GET', signal }, options);
 };
 
 export const getAuthControllerRiotLoginQueryKey = () => {
@@ -175,21 +146,16 @@ export const getAuthControllerRiotLoginQueryOptions = <
   TData = Awaited<ReturnType<typeof authControllerRiotLogin>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof authControllerRiotLogin>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof authControllerRiotLogin>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getAuthControllerRiotLoginQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getAuthControllerRiotLoginQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof authControllerRiotLogin>>
-  > = ({ signal }) => authControllerRiotLogin(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof authControllerRiotLogin>>> = ({
+    signal,
+  }) => authControllerRiotLogin(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof authControllerRiotLogin>>,
@@ -207,11 +173,7 @@ export const useAuthControllerRiotLogin = <
   TData = Awaited<ReturnType<typeof authControllerRiotLogin>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof authControllerRiotLogin>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof authControllerRiotLogin>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getAuthControllerRiotLoginQueryOptions(options);
@@ -225,13 +187,8 @@ export const useAuthControllerRiotLogin = <
   return query;
 };
 
-export const authControllerRiotCallback = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>(
-    { url: `/auth/riot/callback`, method: "POST" },
-    options,
-  );
+export const authControllerRiotCallback = (options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<void>({ url: `/auth/riot/callback`, method: 'POST' }, options);
 };
 
 export const getAuthControllerRiotCallbackMutationOptions = <
@@ -295,10 +252,7 @@ export const authControllerGetProfile = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/auth/me`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/auth/me`, method: 'GET', signal }, options);
 };
 
 export const getAuthControllerGetProfileQueryKey = () => {
@@ -309,21 +263,16 @@ export const getAuthControllerGetProfileQueryOptions = <
   TData = Awaited<ReturnType<typeof authControllerGetProfile>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof authControllerGetProfile>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof authControllerGetProfile>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getAuthControllerGetProfileQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getAuthControllerGetProfileQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof authControllerGetProfile>>
-  > = ({ signal }) => authControllerGetProfile(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof authControllerGetProfile>>> = ({
+    signal,
+  }) => authControllerGetProfile(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof authControllerGetProfile>>,
@@ -341,11 +290,7 @@ export const useAuthControllerGetProfile = <
   TData = Awaited<ReturnType<typeof authControllerGetProfile>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof authControllerGetProfile>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof authControllerGetProfile>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getAuthControllerGetProfileQueryOptions(options);
@@ -359,13 +304,8 @@ export const useAuthControllerGetProfile = <
   return query;
 };
 
-export const authControllerRefreshToken = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>(
-    { url: `/auth/refresh`, method: "POST" },
-    options,
-  );
+export const authControllerRefreshToken = (options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<void>({ url: `/auth/refresh`, method: 'POST' }, options);
 };
 
 export const getAuthControllerRefreshTokenMutationOptions = <
@@ -425,13 +365,8 @@ export const useAuthControllerRefreshToken = <
   return useMutation(mutationOptions);
 };
 
-export const authControllerValidateToken = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>(
-    { url: `/auth/validate`, method: "POST" },
-    options,
-  );
+export const authControllerValidateToken = (options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<void>({ url: `/auth/validate`, method: 'POST' }, options);
 };
 
 export const getAuthControllerValidateTokenMutationOptions = <
@@ -486,16 +421,13 @@ export const useAuthControllerValidateToken = <
   void,
   TContext
 > => {
-  const mutationOptions =
-    getAuthControllerValidateTokenMutationOptions(options);
+  const mutationOptions = getAuthControllerValidateTokenMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
 
-export const authControllerLogout = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>({ url: `/auth/logout`, method: "POST" }, options);
+export const authControllerLogout = (options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<void>({ url: `/auth/logout`, method: 'POST' }, options);
 };
 
 export const getAuthControllerLogoutMutationOptions = <
@@ -533,10 +465,7 @@ export type AuthControllerLogoutMutationResult = NonNullable<
 
 export type AuthControllerLogoutMutationError = ErrorType<unknown>;
 
-export const useAuthControllerLogout = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
+export const useAuthControllerLogout = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof authControllerLogout>>,
     TError,
@@ -544,12 +473,7 @@ export const useAuthControllerLogout = <
     TContext
   >;
   request?: SecondParameter<typeof customInstance>;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof authControllerLogout>>,
-  TError,
-  void,
-  TContext
-> => {
+}): UseMutationResult<Awaited<ReturnType<typeof authControllerLogout>>, TError, void, TContext> => {
   const mutationOptions = getAuthControllerLogoutMutationOptions(options);
 
   return useMutation(mutationOptions);
@@ -562,8 +486,8 @@ export const settingsControllerCreate = (
   return customInstance<void>(
     {
       url: `/settings`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       data: createSettingsDto,
     },
     options,
@@ -633,10 +557,7 @@ export const settingsControllerFindAll = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/settings`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/settings`, method: 'GET', signal }, options);
 };
 
 export const getSettingsControllerFindAllQueryKey = () => {
@@ -647,21 +568,16 @@ export const getSettingsControllerFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof settingsControllerFindAll>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof settingsControllerFindAll>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindAll>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getSettingsControllerFindAllQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getSettingsControllerFindAllQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof settingsControllerFindAll>>
-  > = ({ signal }) => settingsControllerFindAll(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof settingsControllerFindAll>>> = ({
+    signal,
+  }) => settingsControllerFindAll(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof settingsControllerFindAll>>,
@@ -679,11 +595,7 @@ export const useSettingsControllerFindAll = <
   TData = Awaited<ReturnType<typeof settingsControllerFindAll>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof settingsControllerFindAll>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindAll>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSettingsControllerFindAllQueryOptions(options);
@@ -701,10 +613,7 @@ export const settingsControllerFindLatest = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/settings/latest`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/settings/latest`, method: 'GET', signal }, options);
 };
 
 export const getSettingsControllerFindLatestQueryKey = () => {
@@ -715,21 +624,16 @@ export const getSettingsControllerFindLatestQueryOptions = <
   TData = Awaited<ReturnType<typeof settingsControllerFindLatest>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof settingsControllerFindLatest>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindLatest>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getSettingsControllerFindLatestQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getSettingsControllerFindLatestQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof settingsControllerFindLatest>>
-  > = ({ signal }) => settingsControllerFindLatest(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof settingsControllerFindLatest>>> = ({
+    signal,
+  }) => settingsControllerFindLatest(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof settingsControllerFindLatest>>,
@@ -747,11 +651,7 @@ export const useSettingsControllerFindLatest = <
   TData = Awaited<ReturnType<typeof settingsControllerFindLatest>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof settingsControllerFindLatest>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindLatest>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSettingsControllerFindLatestQueryOptions(options);
@@ -769,10 +669,7 @@ export const settingsControllerGetSuggestions = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/settings/suggestions`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/settings/suggestions`, method: 'GET', signal }, options);
 };
 
 export const getSettingsControllerGetSuggestionsQueryKey = () => {
@@ -792,12 +689,11 @@ export const getSettingsControllerGetSuggestionsQueryOptions = <
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getSettingsControllerGetSuggestionsQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getSettingsControllerGetSuggestionsQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof settingsControllerGetSuggestions>>
-  > = ({ signal }) => settingsControllerGetSuggestions(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof settingsControllerGetSuggestions>>> = ({
+    signal,
+  }) => settingsControllerGetSuggestions(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof settingsControllerGetSuggestions>>,
@@ -838,10 +734,7 @@ export const settingsControllerFindOne = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/settings/${id}`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/settings/${id}`, method: 'GET', signal }, options);
 };
 
 export const getSettingsControllerFindOneQueryKey = (id: string) => {
@@ -854,33 +747,26 @@ export const getSettingsControllerFindOneQueryOptions = <
 >(
   id: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof settingsControllerFindOne>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getSettingsControllerFindOneQueryKey(id);
+  const queryKey = queryOptions?.queryKey ?? getSettingsControllerFindOneQueryKey(id);
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof settingsControllerFindOne>>
-  > = ({ signal }) => settingsControllerFindOne(id, requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof settingsControllerFindOne>>> = ({
+    signal,
+  }) => settingsControllerFindOne(id, requestOptions, signal);
 
   return {
     queryKey,
     queryFn,
     enabled: !!id,
     ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof settingsControllerFindOne>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
+  } as UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData> & {
+    queryKey: QueryKey;
+  };
 };
 
 export type SettingsControllerFindOneQueryResult = NonNullable<
@@ -894,11 +780,7 @@ export const useSettingsControllerFindOne = <
 >(
   id: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof settingsControllerFindOne>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -921,8 +803,8 @@ export const settingsControllerUpdate = (
   return customInstance<void>(
     {
       url: `/settings/${id}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       data: updateSettingsDto,
     },
     options,
@@ -992,10 +874,7 @@ export const settingsControllerRemove = (
   id: string,
   options?: SecondParameter<typeof customInstance>,
 ) => {
-  return customInstance<void>(
-    { url: `/settings/${id}`, method: "DELETE" },
-    options,
-  );
+  return customInstance<void>({ url: `/settings/${id}`, method: 'DELETE' }, options);
 };
 
 export const getSettingsControllerRemoveMutationOptions = <
@@ -1064,8 +943,8 @@ export const matchDataControllerCreate = (
   return customInstance<void>(
     {
       url: `/match-data`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       data: createMatchDataDto,
     },
     options,
@@ -1106,8 +985,7 @@ export const getMatchDataControllerCreateMutationOptions = <
 export type MatchDataControllerCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof matchDataControllerCreate>>
 >;
-export type MatchDataControllerCreateMutationBody =
-  BodyType<CreateMatchDataDto>;
+export type MatchDataControllerCreateMutationBody = BodyType<CreateMatchDataDto>;
 export type MatchDataControllerCreateMutationError = ErrorType<unknown>;
 
 export const useMatchDataControllerCreate = <
@@ -1136,10 +1014,7 @@ export const matchDataControllerFindAll = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/match-data`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/match-data`, method: 'GET', signal }, options);
 };
 
 export const getMatchDataControllerFindAllQueryKey = () => {
@@ -1150,21 +1025,16 @@ export const getMatchDataControllerFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof matchDataControllerFindAll>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof matchDataControllerFindAll>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerFindAll>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getMatchDataControllerFindAllQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getMatchDataControllerFindAllQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof matchDataControllerFindAll>>
-  > = ({ signal }) => matchDataControllerFindAll(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof matchDataControllerFindAll>>> = ({
+    signal,
+  }) => matchDataControllerFindAll(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof matchDataControllerFindAll>>,
@@ -1182,11 +1052,7 @@ export const useMatchDataControllerFindAll = <
   TData = Awaited<ReturnType<typeof matchDataControllerFindAll>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof matchDataControllerFindAll>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerFindAll>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getMatchDataControllerFindAllQueryOptions(options);
@@ -1200,13 +1066,8 @@ export const useMatchDataControllerFindAll = <
   return query;
 };
 
-export const matchDataControllerSync = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>(
-    { url: `/match-data/sync`, method: "POST" },
-    options,
-  );
+export const matchDataControllerSync = (options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<void>({ url: `/match-data/sync`, method: 'POST' }, options);
 };
 
 export const getMatchDataControllerSyncMutationOptions = <
@@ -1270,10 +1131,7 @@ export const matchDataControllerGetStats = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/match-data/stats`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/match-data/stats`, method: 'GET', signal }, options);
 };
 
 export const getMatchDataControllerGetStatsQueryKey = () => {
@@ -1284,21 +1142,16 @@ export const getMatchDataControllerGetStatsQueryOptions = <
   TData = Awaited<ReturnType<typeof matchDataControllerGetStats>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof matchDataControllerGetStats>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerGetStats>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getMatchDataControllerGetStatsQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getMatchDataControllerGetStatsQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof matchDataControllerGetStats>>
-  > = ({ signal }) => matchDataControllerGetStats(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof matchDataControllerGetStats>>> = ({
+    signal,
+  }) => matchDataControllerGetStats(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof matchDataControllerGetStats>>,
@@ -1316,11 +1169,7 @@ export const useMatchDataControllerGetStats = <
   TData = Awaited<ReturnType<typeof matchDataControllerGetStats>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof matchDataControllerGetStats>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerGetStats>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getMatchDataControllerGetStatsQueryOptions(options);
@@ -1339,10 +1188,7 @@ export const matchDataControllerFindOne = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/match-data/${id}`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/match-data/${id}`, method: 'GET', signal }, options);
 };
 
 export const getMatchDataControllerFindOneQueryKey = (id: string) => {
@@ -1355,33 +1201,26 @@ export const getMatchDataControllerFindOneQueryOptions = <
 >(
   id: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof matchDataControllerFindOne>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerFindOne>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getMatchDataControllerFindOneQueryKey(id);
+  const queryKey = queryOptions?.queryKey ?? getMatchDataControllerFindOneQueryKey(id);
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof matchDataControllerFindOne>>
-  > = ({ signal }) => matchDataControllerFindOne(id, requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof matchDataControllerFindOne>>> = ({
+    signal,
+  }) => matchDataControllerFindOne(id, requestOptions, signal);
 
   return {
     queryKey,
     queryFn,
     enabled: !!id,
     ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof matchDataControllerFindOne>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
+  } as UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerFindOne>>, TError, TData> & {
+    queryKey: QueryKey;
+  };
 };
 
 export type MatchDataControllerFindOneQueryResult = NonNullable<
@@ -1395,11 +1234,7 @@ export const useMatchDataControllerFindOne = <
 >(
   id: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof matchDataControllerFindOne>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof matchDataControllerFindOne>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1418,10 +1253,7 @@ export const matchDataControllerRemove = (
   id: string,
   options?: SecondParameter<typeof customInstance>,
 ) => {
-  return customInstance<void>(
-    { url: `/match-data/${id}`, method: "DELETE" },
-    options,
-  );
+  return customInstance<void>({ url: `/match-data/${id}`, method: 'DELETE' }, options);
 };
 
 export const getMatchDataControllerRemoveMutationOptions = <
@@ -1487,10 +1319,7 @@ export const analyticsControllerGetPerformance = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<void>(
-    { url: `/analytics/performance`, method: "GET", signal },
-    options,
-  );
+  return customInstance<void>({ url: `/analytics/performance`, method: 'GET', signal }, options);
 };
 
 export const getAnalyticsControllerGetPerformanceQueryKey = () => {
@@ -1510,12 +1339,11 @@ export const getAnalyticsControllerGetPerformanceQueryOptions = <
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getAnalyticsControllerGetPerformanceQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getAnalyticsControllerGetPerformanceQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof analyticsControllerGetPerformance>>
-  > = ({ signal }) => analyticsControllerGetPerformance(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof analyticsControllerGetPerformance>>> = ({
+    signal,
+  }) => analyticsControllerGetPerformance(requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof analyticsControllerGetPerformance>>,
@@ -1540,8 +1368,7 @@ export const useAnalyticsControllerGetPerformance = <
   >;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions =
-    getAnalyticsControllerGetPerformanceQueryOptions(options);
+  const queryOptions = getAnalyticsControllerGetPerformanceQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;
@@ -1555,10 +1382,7 @@ export const useAnalyticsControllerGetPerformance = <
 export const analyticsControllerComparePerformance = (
   options?: SecondParameter<typeof customInstance>,
 ) => {
-  return customInstance<void>(
-    { url: `/analytics/comparison`, method: "POST" },
-    options,
-  );
+  return customInstance<void>({ url: `/analytics/comparison`, method: 'POST' }, options);
 };
 
 export const getAnalyticsControllerComparePerformanceMutationOptions = <
@@ -1594,8 +1418,7 @@ export type AnalyticsControllerComparePerformanceMutationResult = NonNullable<
   Awaited<ReturnType<typeof analyticsControllerComparePerformance>>
 >;
 
-export type AnalyticsControllerComparePerformanceMutationError =
-  ErrorType<unknown>;
+export type AnalyticsControllerComparePerformanceMutationError = ErrorType<unknown>;
 
 export const useAnalyticsControllerComparePerformance = <
   TError = ErrorType<unknown>,
@@ -1614,8 +1437,7 @@ export const useAnalyticsControllerComparePerformance = <
   void,
   TContext
 > => {
-  const mutationOptions =
-    getAnalyticsControllerComparePerformanceMutationOptions(options);
+  const mutationOptions = getAnalyticsControllerComparePerformanceMutationOptions(options);
 
   return useMutation(mutationOptions);
 };

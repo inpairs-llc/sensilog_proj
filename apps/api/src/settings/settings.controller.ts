@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { CreateSettingsDto } from './dto/create-settings.dto';
 import { UpdateSettingsDto } from './dto/update-settings.dto';
@@ -35,7 +45,11 @@ export class SettingsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Request() req: any, @Body() updateSettingsDto: UpdateSettingsDto) {
+  update(
+    @Param('id') id: string,
+    @Request() req: any,
+    @Body() updateSettingsDto: UpdateSettingsDto,
+  ) {
     return this.settingsService.update(id, req.user.userId, updateSettingsDto);
   }
 
