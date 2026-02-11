@@ -1,13 +1,7 @@
 'use client';
 
 import { Layout } from '@/components/layout/Layout';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -17,13 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  TrendingUp,
-  Target,
-  Activity,
-  BarChart3,
-  Download,
-} from 'lucide-react';
+import { TrendingUp, Target, Activity, BarChart3, Download } from 'lucide-react';
 import { useState } from 'react';
 import { Line, Bar, Scatter } from 'react-chartjs-2';
 import {
@@ -203,102 +191,92 @@ export default function AnalyticsPage() {
 
   return (
     <Layout>
-      <div className='space-y-6'>
+      <div className="space-y-6">
         {/* Header */}
-        <div className='flex items-center justify-between'>
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className='text-3xl font-bold'>Performance Analytics</h1>
-            <p className='text-muted-foreground'>
+            <h1 className="text-3xl font-bold">Performance Analytics</h1>
+            <p className="text-muted-foreground">
               Analyze your gameplay trends and optimize your settings.
             </p>
           </div>
-          <div className='flex items-center gap-4'>
+          <div className="flex items-center gap-4">
             <Select value={timeRange} onValueChange={setTimeRange}>
-              <SelectTrigger className='w-[150px]'>
+              <SelectTrigger className="w-[150px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='7d'>Last 7 Days</SelectItem>
-                <SelectItem value='30d'>Last 30 Days</SelectItem>
-                <SelectItem value='90d'>Last 90 Days</SelectItem>
-                <SelectItem value='all'>All Time</SelectItem>
+                <SelectItem value="7d">Last 7 Days</SelectItem>
+                <SelectItem value="30d">Last 30 Days</SelectItem>
+                <SelectItem value="90d">Last 90 Days</SelectItem>
+                <SelectItem value="all">All Time</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant='outline' size='sm'>
-              <Download className='mr-2 h-4 w-4' />
+            <Button variant="outline" size="sm">
+              <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
           </div>
         </div>
 
         {/* Key Metrics */}
-        <div className='grid gap-4 md:grid-cols-4'>
+        <div className="grid gap-4 md:grid-cols-4">
           <Card>
-            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                Best K/D Ratio
-              </CardTitle>
-              <TrendingUp className='h-4 w-4 text-green-500' />
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Best K/D Ratio</CardTitle>
+              <TrendingUp className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>2.15</div>
-              <p className='text-xs text-muted-foreground'>
-                With 0.35 sensitivity
-              </p>
+              <div className="text-2xl font-bold">2.15</div>
+              <p className="text-xs text-muted-foreground">With 0.35 sensitivity</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                Peak Headshot %
-              </CardTitle>
-              <Target className='h-4 w-4 text-blue-500' />
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Peak Headshot %</CardTitle>
+              <Target className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>42%</div>
-              <p className='text-xs text-muted-foreground'>+8% from average</p>
+              <div className="text-2xl font-bold">42%</div>
+              <p className="text-xs text-muted-foreground">+8% from average</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                Optimal eDPI
-              </CardTitle>
-              <Activity className='h-4 w-4 text-purple-500' />
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Optimal eDPI</CardTitle>
+              <Activity className="h-4 w-4 text-purple-500" />
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>280</div>
-              <p className='text-xs text-muted-foreground'>0.35 × 800 DPI</p>
+              <div className="text-2xl font-bold">280</div>
+              <p className="text-xs text-muted-foreground">0.35 × 800 DPI</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                Settings Changes
-              </CardTitle>
-              <BarChart3 className='h-4 w-4 text-orange-500' />
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Settings Changes</CardTitle>
+              <BarChart3 className="h-4 w-4 text-orange-500" />
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>3</div>
-              <p className='text-xs text-muted-foreground'>This month</p>
+              <div className="text-2xl font-bold">3</div>
+              <p className="text-xs text-muted-foreground">This month</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Analytics Tabs */}
-        <Tabs defaultValue='performance' className='space-y-4'>
-          <TabsList className='grid w-full grid-cols-4'>
-            <TabsTrigger value='performance'>Performance Trends</TabsTrigger>
-            <TabsTrigger value='sensitivity'>Sensitivity Analysis</TabsTrigger>
-            <TabsTrigger value='agents'>Agent Stats</TabsTrigger>
-            <TabsTrigger value='maps'>Map Performance</TabsTrigger>
+        <Tabs defaultValue="performance" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="performance">Performance Trends</TabsTrigger>
+            <TabsTrigger value="sensitivity">Sensitivity Analysis</TabsTrigger>
+            <TabsTrigger value="agents">Agent Stats</TabsTrigger>
+            <TabsTrigger value="maps">Map Performance</TabsTrigger>
           </TabsList>
 
           {/* Performance Trends */}
-          <TabsContent value='performance' className='space-y-4'>
+          <TabsContent value="performance" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Performance Over Time</CardTitle>
@@ -307,38 +285,38 @@ export default function AnalyticsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className='h-[400px]'>
+                <div className="h-[400px]">
                   <Line data={performanceData} options={chartOptions} />
                 </div>
               </CardContent>
             </Card>
 
-            <div className='grid gap-4 lg:grid-cols-2'>
+            <div className="grid gap-4 lg:grid-cols-2">
               <Card>
                 <CardHeader>
                   <CardTitle>Weekly Comparison</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='space-y-4'>
-                    <div className='flex items-center justify-between'>
-                      <span className='text-sm'>Average K/D</span>
-                      <div className='flex items-center gap-2'>
-                        <span className='font-medium'>1.45</span>
-                        <span className='text-xs text-green-500'>+0.12</span>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Average K/D</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">1.45</span>
+                        <span className="text-xs text-green-500">+0.12</span>
                       </div>
                     </div>
-                    <div className='flex items-center justify-between'>
-                      <span className='text-sm'>Win Rate</span>
-                      <div className='flex items-center gap-2'>
-                        <span className='font-medium'>54.2%</span>
-                        <span className='text-xs text-green-500'>+2.3%</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Win Rate</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">54.2%</span>
+                        <span className="text-xs text-green-500">+2.3%</span>
                       </div>
                     </div>
-                    <div className='flex items-center justify-between'>
-                      <span className='text-sm'>Avg Combat Score</span>
-                      <div className='flex items-center gap-2'>
-                        <span className='font-medium'>265</span>
-                        <span className='text-xs text-red-500'>-12</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Avg Combat Score</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">265</span>
+                        <span className="text-xs text-red-500">-12</span>
                       </div>
                     </div>
                   </div>
@@ -350,28 +328,22 @@ export default function AnalyticsPage() {
                   <CardTitle>Performance Insights</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='space-y-4'>
-                    <div className='p-3 rounded-lg bg-green-500/10 border border-green-500/20'>
-                      <div className='text-sm font-medium text-green-500'>
-                        Improving
-                      </div>
-                      <div className='text-xs text-muted-foreground mt-1'>
+                  <div className="space-y-4">
+                    <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                      <div className="text-sm font-medium text-green-500">Improving</div>
+                      <div className="text-xs text-muted-foreground mt-1">
                         Your K/D ratio has improved by 15% this week
                       </div>
                     </div>
-                    <div className='p-3 rounded-lg bg-blue-500/10 border border-blue-500/20'>
-                      <div className='text-sm font-medium text-blue-500'>
-                        Consistent
-                      </div>
-                      <div className='text-xs text-muted-foreground mt-1'>
+                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                      <div className="text-sm font-medium text-blue-500">Consistent</div>
+                      <div className="text-xs text-muted-foreground mt-1">
                         Headshot accuracy remains stable at 28-32%
                       </div>
                     </div>
-                    <div className='p-3 rounded-lg bg-orange-500/10 border border-orange-500/20'>
-                      <div className='text-sm font-medium text-orange-500'>
-                        Suggestion
-                      </div>
-                      <div className='text-xs text-muted-foreground mt-1'>
+                    <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                      <div className="text-sm font-medium text-orange-500">Suggestion</div>
+                      <div className="text-xs text-muted-foreground mt-1">
                         Try lowering sensitivity by 0.02 for better precision
                       </div>
                     </div>
@@ -382,7 +354,7 @@ export default function AnalyticsPage() {
           </TabsContent>
 
           {/* Sensitivity Analysis */}
-          <TabsContent value='sensitivity' className='space-y-4'>
+          <TabsContent value="sensitivity" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Sensitivity vs Performance</CardTitle>
@@ -391,11 +363,8 @@ export default function AnalyticsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className='h-[400px]'>
-                  <Scatter
-                    data={sensitivityCorrelation}
-                    options={scatterOptions}
-                  />
+                <div className="h-[400px]">
+                  <Scatter data={sensitivityCorrelation} options={scatterOptions} />
                 </div>
               </CardContent>
             </Card>
@@ -405,49 +374,45 @@ export default function AnalyticsPage() {
                 <CardTitle>Settings History Impact</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className='space-y-4'>
-                  <div className='p-4 rounded-lg bg-secondary/50'>
-                    <div className='flex items-center justify-between mb-2'>
-                      <span className='font-medium'>0.35 Sensitivity</span>
-                      <span className='text-sm text-muted-foreground'>
-                        Current
-                      </span>
+                <div className="space-y-4">
+                  <div className="p-4 rounded-lg bg-secondary/50">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium">0.35 Sensitivity</span>
+                      <span className="text-sm text-muted-foreground">Current</span>
                     </div>
-                    <div className='grid grid-cols-3 gap-4 text-sm'>
+                    <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className='text-muted-foreground'>K/D:</span>
-                        <span className='ml-1 font-medium'>1.45</span>
+                        <span className="text-muted-foreground">K/D:</span>
+                        <span className="ml-1 font-medium">1.45</span>
                       </div>
                       <div>
-                        <span className='text-muted-foreground'>HS%:</span>
-                        <span className='ml-1 font-medium'>32%</span>
+                        <span className="text-muted-foreground">HS%:</span>
+                        <span className="ml-1 font-medium">32%</span>
                       </div>
                       <div>
-                        <span className='text-muted-foreground'>Win%:</span>
-                        <span className='ml-1 font-medium'>58%</span>
+                        <span className="text-muted-foreground">Win%:</span>
+                        <span className="ml-1 font-medium">58%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className='p-4 rounded-lg bg-secondary/30'>
-                    <div className='flex items-center justify-between mb-2'>
-                      <span className='font-medium'>0.38 Sensitivity</span>
-                      <span className='text-sm text-muted-foreground'>
-                        Jan 10 - Jan 15
-                      </span>
+                  <div className="p-4 rounded-lg bg-secondary/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium">0.38 Sensitivity</span>
+                      <span className="text-sm text-muted-foreground">Jan 10 - Jan 15</span>
                     </div>
-                    <div className='grid grid-cols-3 gap-4 text-sm'>
+                    <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className='text-muted-foreground'>K/D:</span>
-                        <span className='ml-1 font-medium'>1.20</span>
+                        <span className="text-muted-foreground">K/D:</span>
+                        <span className="ml-1 font-medium">1.20</span>
                       </div>
                       <div>
-                        <span className='text-muted-foreground'>HS%:</span>
-                        <span className='ml-1 font-medium'>25%</span>
+                        <span className="text-muted-foreground">HS%:</span>
+                        <span className="ml-1 font-medium">25%</span>
                       </div>
                       <div>
-                        <span className='text-muted-foreground'>Win%:</span>
-                        <span className='ml-1 font-medium'>45%</span>
+                        <span className="text-muted-foreground">Win%:</span>
+                        <span className="ml-1 font-medium">45%</span>
                       </div>
                     </div>
                   </div>
@@ -457,16 +422,14 @@ export default function AnalyticsPage() {
           </TabsContent>
 
           {/* Agent Stats */}
-          <TabsContent value='agents' className='space-y-4'>
+          <TabsContent value="agents" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Agent Performance</CardTitle>
-                <CardDescription>
-                  Compare your performance across different agents.
-                </CardDescription>
+                <CardDescription>Compare your performance across different agents.</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className='h-[400px]'>
+                <div className="h-[400px]">
                   <Bar data={agentPerformance} options={chartOptions} />
                 </div>
               </CardContent>
@@ -474,16 +437,14 @@ export default function AnalyticsPage() {
           </TabsContent>
 
           {/* Map Performance */}
-          <TabsContent value='maps' className='space-y-4'>
+          <TabsContent value="maps" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Map Win Rates</CardTitle>
-                <CardDescription>
-                  Your performance breakdown by map.
-                </CardDescription>
+                <CardDescription>Your performance breakdown by map.</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className='h-[400px]'>
+                <div className="h-[400px]">
                   <Bar data={mapPerformance} options={chartOptions} />
                 </div>
               </CardContent>

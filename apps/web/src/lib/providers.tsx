@@ -30,17 +30,14 @@ export function Providers({ children }: ProvidersProps) {
             retry: 1,
           },
         },
-      })
+      }),
   );
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
       {process.env.NODE_ENV === 'development' && (
-        <ReactQueryDevtools
-          initialIsOpen={false}
-          position="bottom-right"
-        />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       )}
     </QueryClientProvider>
   );

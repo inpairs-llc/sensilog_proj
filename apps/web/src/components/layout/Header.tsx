@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { User, LogOut, Settings, ChevronDown, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { User, LogOut, Settings, ChevronDown, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,20 +11,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useAuth } from "@/hooks/useAuth"
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Header() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const { user, isAuthenticated, isLoading, startRiotLogin, logout, isLoggingOut } = useAuth()
+  const pathname = usePathname();
+  const router = useRouter();
+  const { user, isAuthenticated, isLoading, startRiotLogin, logout, isLoggingOut } = useAuth();
 
   const navItems = [
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/settings", label: "Settings" },
-    { href: "/matches", label: "Matches" },
-    { href: "/analytics", label: "Analytics" },
-  ]
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/settings', label: 'Settings' },
+    { href: '/matches', label: 'Matches' },
+    { href: '/analytics', label: 'Analytics' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -44,7 +44,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               className={`transition-colors hover:text-foreground/80 ${
-                pathname === item.href ? "text-foreground" : "text-foreground/60"
+                pathname === item.href ? 'text-foreground' : 'text-foreground/60'
               }`}
             >
               {item.label}
@@ -75,9 +75,7 @@ export function Header() {
                     <p className="text-sm font-medium leading-none">
                       {user.gameName}#{user.tagLine}
                     </p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      Riot Account
-                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">Riot Account</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -88,12 +86,12 @@ export function Header() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   className="text-destructive cursor-pointer"
                   disabled={isLoggingOut}
                   onClick={() => {
-                    logout()
-                    router.push('/')
+                    logout();
+                    router.push('/');
                   }}
                 >
                   <LogOut className="mr-2 h-4 w-4" />
@@ -102,7 +100,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button 
+            <Button
               onClick={startRiotLogin}
               disabled={isLoading}
               className="bg-[#D13639] hover:bg-[#B82E31] text-white disabled:opacity-50"
@@ -125,5 +123,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Request, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+  Query,
+} from '@nestjs/common';
 import { MatchDataService } from './match-data.service';
 import { CreateMatchDataDto } from './dto/create-match-data.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';

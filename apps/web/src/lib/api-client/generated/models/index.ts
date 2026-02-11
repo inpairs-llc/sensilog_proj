@@ -6,6 +6,6 @@
  * OpenAPI spec version: 1.0
  */
 
-export * from "./createMatchDataDto";
-export * from "./createSettingsDto";
-export * from "./updateSettingsDto";
+export * from './createMatchDataDto';
+export * from './createSettingsDto';
+export * from './updateSettingsDto';

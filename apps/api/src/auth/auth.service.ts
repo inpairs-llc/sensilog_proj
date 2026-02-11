@@ -14,7 +14,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private riotService: RiotService,
-  ) { }
+  ) {}
 
   /**
    * JWTトークンを発行

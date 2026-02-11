@@ -24,4 +24,4 @@ import { RiotService } from './riot.service';
   controllers: [AuthController],
   exports: [AuthService, RiotService, JwtAuthGuard],
 })
-export class AuthModule { }
+export class AuthModule {}

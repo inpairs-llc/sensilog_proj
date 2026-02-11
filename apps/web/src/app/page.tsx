@@ -1,28 +1,29 @@
-"use client"
+'use client';
 
-import { useAuth } from "@/hooks/useAuth"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Loader2, Target, TrendingUp, Shield, Zap } from "lucide-react"
-import Link from "next/link"
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Loader2, Target, TrendingUp, Shield, Zap } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HomePage() {
-  const { isAuthenticated, isLoading, startRiotLogin } = useAuth()
-  const router = useRouter()
+  const { isAuthenticated, isLoading, startRiotLogin } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     // 認証済みの場合はダッシュボードにリダイレクト
     if (!isLoading && isAuthenticated) {
-      const redirectUrl = typeof window !== 'undefined' 
-        ? sessionStorage.getItem('redirectAfterLogin') || '/dashboard'
-        : '/dashboard'
+      const redirectUrl =
+        typeof window !== 'undefined'
+          ? sessionStorage.getItem('redirectAfterLogin') || '/dashboard'
+          : '/dashboard';
       if (typeof window !== 'undefined') {
-        sessionStorage.removeItem('redirectAfterLogin')
+        sessionStorage.removeItem('redirectAfterLogin');
       }
-      router.push(redirectUrl)
+      router.push(redirectUrl);
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, router]);
 
   // 認証済みならリダイレクト中
   if (isAuthenticated) {
@@ -30,7 +31,7 @@ export default function HomePage() {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
-    )
+    );
   }
 
   return (
@@ -45,14 +46,20 @@ export default function HomePage() {
             <span className="font-bold text-xl">SensiLog</span>
           </div>
           <div className="flex items-center space-x-4">
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/privacy"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Privacy
             </Link>
-            <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/terms"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Terms
             </Link>
-            <Button 
-              onClick={startRiotLogin} 
+            <Button
+              onClick={startRiotLogin}
               disabled={isLoading}
               className="bg-[#D13639] hover:bg-[#B82E31] text-white"
             >
@@ -62,7 +69,7 @@ export default function HomePage() {
                   読み込み中...
                 </>
               ) : (
-                "Riot IDでログイン"
+                'Riot IDでログイン'
               )}
             </Button>
           </div>
@@ -79,12 +86,11 @@ export default function HomePage() {
               <span className="text-primary">科学的に</span>管理する
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              マッチ履歴と感度設定を紐付けて分析。
-              あなたの最適な感度を見つけましょう。
+              マッチ履歴と感度設定を紐付けて分析。 あなたの最適な感度を見つけましょう。
             </p>
             <div className="pt-4">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 onClick={startRiotLogin}
                 disabled={isLoading}
                 className="bg-[#D13639] hover:bg-[#B82E31] text-white text-lg px-8 py-6"
@@ -110,22 +116,22 @@ export default function HomePage() {
         {/* Features Section */}
         <section className="container mx-auto px-4 py-16 lg:py-24">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <FeatureCard 
+            <FeatureCard
               icon={Target}
               title="感度管理"
               description="DPI、ゲーム内感度、エイム感度などを一元管理"
             />
-            <FeatureCard 
+            <FeatureCard
               icon={TrendingUp}
               title="パフォーマンス分析"
               description="マッチごとのK/D、HS%、ADRなどを詳細に分析"
             />
-            <FeatureCard 
+            <FeatureCard
               icon={Shield}
               title="履歴トラッキング"
               description="感度変更の履歴とパフォーマンスの相関を可視化"
             />
-            <FeatureCard 
+            <FeatureCard
               icon={Zap}
               title="最適化提案"
               description="データに基づいた最適な設定を提案"
@@ -136,20 +142,17 @@ export default function HomePage() {
         {/* CTA Section */}
         <section className="bg-secondary/50 py-16 lg:py-24">
           <div className="container mx-auto px-4 text-center space-y-6">
-            <h2 className="text-3xl lg:text-4xl font-bold">
-              今すぐ始めましょう
-            </h2>
+            <h2 className="text-3xl lg:text-4xl font-bold">今すぐ始めましょう</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Riot IDでログインするだけで、すぐに使い始められます。
-              無料でご利用いただけます。
+              Riot IDでログインするだけで、すぐに使い始められます。 無料でご利用いただけます。
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={startRiotLogin}
               disabled={isLoading}
               className="bg-[#D13639] hover:bg-[#B82E31] text-white"
             >
-              {isLoading ? "読み込み中..." : "Riot IDでログイン"}
+              {isLoading ? '読み込み中...' : 'Riot IDでログイン'}
             </Button>
           </div>
         </section>
@@ -173,9 +176,7 @@ export default function HomePage() {
                 Terms of Service
               </Link>
             </div>
-            <p className="text-sm text-muted-foreground">
-              © 2025 SensiLog. All rights reserved.
-            </p>
+            <p className="text-sm text-muted-foreground">© 2025 SensiLog. All rights reserved.</p>
           </div>
           <p className="text-xs text-muted-foreground text-center mt-4">
             SensiLog is not affiliated with Riot Games or any of its subsidiaries.
@@ -183,17 +184,17 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-function FeatureCard({ 
-  icon: Icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ComponentType<{ className?: string }>
-  title: string
-  description: string 
+function FeatureCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
 }) {
   return (
     <div className="p-6 rounded-lg border border-border bg-card hover:bg-accent/50 transition-colors">
@@ -203,5 +204,5 @@ function FeatureCard({
       <h3 className="font-semibold text-lg mb-2">{title}</h3>
       <p className="text-sm text-muted-foreground">{description}</p>
     </div>
-  )
+  );
 }

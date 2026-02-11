@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "clean": "rm -rf .next"
   },
   "dependencies": {

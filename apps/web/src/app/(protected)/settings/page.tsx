@@ -1,26 +1,24 @@
-"use client"
+'use client';
 
-import { Layout } from "@/components/layout/Layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
+import { Layout } from '@/components/layout/Layout';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  Save,
-  History,
-  Monitor,
-  Mouse,
-  Keyboard,
-  X,
-  Plus,
-} from "lucide-react"
-import { useState } from "react"
-import { format } from "date-fns"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Save, History, Monitor, Mouse, Keyboard, X, Plus } from 'lucide-react';
+import { useState } from 'react';
+import { format } from 'date-fns';
 
 // Mock data
 const mockHistory = [
@@ -29,71 +27,71 @@ const mockHistory = [
     date: new Date(2024, 0, 15),
     sensitivity: 0.35,
     dpi: 800,
-    tags: ["ranked", "main"],
+    tags: ['ranked', 'main'],
   },
   {
     id: 2,
     date: new Date(2024, 0, 10),
     sensitivity: 0.38,
     dpi: 800,
-    tags: ["testing"],
+    tags: ['testing'],
   },
   {
     id: 3,
     date: new Date(2024, 0, 5),
-    sensitivity: 0.40,
+    sensitivity: 0.4,
     dpi: 800,
-    tags: ["old"],
+    tags: ['old'],
   },
-]
+];
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
     // Game Settings
-    sensitivity: "0.35",
-    scopedSensitivity: "1.0",
-    dpi: "800",
-    
+    sensitivity: '0.35',
+    scopedSensitivity: '1.0',
+    dpi: '800',
+
     // Windows Settings
-    windowsSensitivity: "6",
+    windowsSensitivity: '6',
     windowsAcceleration: false,
-    
+
     // Hardware
-    mouseDevice: "Logitech G Pro X Superlight",
-    mousepad: "Artisan Zero",
-    keyboardDevice: "Wooting 60HE",
-    
+    mouseDevice: 'Logitech G Pro X Superlight',
+    mousepad: 'Artisan Zero',
+    keyboardDevice: 'Wooting 60HE',
+
     // Display
-    screenResolution: "1920x1080",
-    aspectRatio: "16:9",
-    displayScaling: "100%",
-    displayMode: "Fullscreen",
-    
+    screenResolution: '1920x1080',
+    aspectRatio: '16:9',
+    displayScaling: '100%',
+    displayMode: 'Fullscreen',
+
     // Additional
     rawInputBuffer: true,
-    innerDeadzone: "0.0",
-    outerDeadzone: "1.0",
-    comment: "",
-  })
+    innerDeadzone: '0.0',
+    outerDeadzone: '1.0',
+    comment: '',
+  });
 
-  const [tags, setTags] = useState<string[]>(["main", "ranked"])
-  const [newTag, setNewTag] = useState("")
+  const [tags, setTags] = useState<string[]>(['main', 'ranked']);
+  const [newTag, setNewTag] = useState('');
 
   const handleSave = () => {
-    console.log("Saving settings:", settings)
+    console.log('Saving settings:', settings);
     // API call would go here
-  }
+  };
 
   const handleAddTag = () => {
     if (newTag && !tags.includes(newTag)) {
-      setTags([...tags, newTag])
-      setNewTag("")
+      setTags([...tags, newTag]);
+      setNewTag('');
     }
-  }
+  };
 
   const handleRemoveTag = (tag: string) => {
-    setTags(tags.filter(t => t !== tag))
-  }
+    setTags(tags.filter((t) => t !== tag));
+  };
 
   return (
     <Layout>
@@ -149,7 +147,9 @@ export default function SettingsPage() {
                       type="number"
                       step="0.01"
                       value={settings.scopedSensitivity}
-                      onChange={(e) => setSettings({ ...settings, scopedSensitivity: e.target.value })}
+                      onChange={(e) =>
+                        setSettings({ ...settings, scopedSensitivity: e.target.value })
+                      }
                     />
                   </div>
                   <div className="space-y-2">
@@ -184,7 +184,9 @@ export default function SettingsPage() {
                     <Label htmlFor="windowsSensitivity">Windows Sensitivity (1-11)</Label>
                     <Select
                       value={settings.windowsSensitivity}
-                      onValueChange={(value) => setSettings({ ...settings, windowsSensitivity: value })}
+                      onValueChange={(value) =>
+                        setSettings({ ...settings, windowsSensitivity: value })
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -203,12 +205,12 @@ export default function SettingsPage() {
                     <div className="flex items-center space-x-2">
                       <Switch
                         checked={settings.windowsAcceleration}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked) =>
                           setSettings({ ...settings, windowsAcceleration: checked })
                         }
                       />
                       <span className="text-sm text-muted-foreground">
-                        {settings.windowsAcceleration ? "Enabled" : "Disabled"}
+                        {settings.windowsAcceleration ? 'Enabled' : 'Disabled'}
                       </span>
                     </div>
                   </div>
@@ -219,9 +221,7 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Additional Settings</CardTitle>
-                <CardDescription>
-                  Tags and notes for this configuration.
-                </CardDescription>
+                <CardDescription>Tags and notes for this configuration.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -242,7 +242,7 @@ export default function SettingsPage() {
                       placeholder="Add a tag..."
                       value={newTag}
                       onChange={(e) => setNewTag(e.target.value)}
-                      onKeyPress={(e) => e.key === "Enter" && handleAddTag()}
+                      onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
                     />
                     <Button onClick={handleAddTag} size="sm">
                       <Plus className="h-4 w-4" />
@@ -329,7 +329,9 @@ export default function SettingsPage() {
                     <Label>Resolution</Label>
                     <Select
                       value={settings.screenResolution}
-                      onValueChange={(value) => setSettings({ ...settings, screenResolution: value })}
+                      onValueChange={(value) =>
+                        setSettings({ ...settings, screenResolution: value })
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -368,9 +370,7 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Settings History</CardTitle>
-                <CardDescription>
-                  View and restore previous configurations.
-                </CardDescription>
+                <CardDescription>View and restore previous configurations.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -380,11 +380,10 @@ export default function SettingsPage() {
                       className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-colors"
                     >
                       <div>
-                        <div className="font-medium">
-                          {format(record.date, "PPP")}
-                        </div>
+                        <div className="font-medium">{format(record.date, 'PPP')}</div>
                         <div className="text-sm text-muted-foreground">
-                          Sens: {record.sensitivity} • DPI: {record.dpi} • eDPI: {record.sensitivity * record.dpi}
+                          Sens: {record.sensitivity} • DPI: {record.dpi} • eDPI:{' '}
+                          {record.sensitivity * record.dpi}
                         </div>
                         <div className="flex gap-1 mt-1">
                           {record.tags.map((tag) => (
@@ -409,5 +408,5 @@ export default function SettingsPage() {
         </Tabs>
       </div>
     </Layout>
-  )
+  );
 }

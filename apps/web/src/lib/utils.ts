@@ -18,10 +18,10 @@ export function formatNumber(
     decimals?: number;
     suffix?: string;
     prefix?: string;
-  }
+  },
 ): string {
   const { decimals = 0, suffix = '', prefix = '' } = options || {};
-  
+
   const formatted = value.toFixed(decimals);
   return `${prefix}${formatted}${suffix}`;
 }
@@ -51,7 +51,7 @@ export function formatDate(
   options?: {
     format?: 'short' | 'medium' | 'long' | 'relative';
     includeTime?: boolean;
-  }
+  },
 ): string {
   const { format = 'medium', includeTime = false } = options || {};
   const dateObj = typeof date === 'string' ? new Date(date) : date;
@@ -106,24 +106,19 @@ export function formatRelativeTime(date: Date): string {
 /**
  * 試合時間をフォーマットする
  */
-export function formatMatchDuration(
-  startTime: Date | string,
-  endTime?: Date | string
-): string {
+export function formatMatchDuration(startTime: Date | string, endTime?: Date | string): string {
   const start = typeof startTime === 'string' ? new Date(startTime) : startTime;
-  const end = endTime 
-    ? (typeof endTime === 'string' ? new Date(endTime) : endTime)
-    : new Date();
+  const end = endTime ? (typeof endTime === 'string' ? new Date(endTime) : endTime) : new Date();
 
   const durationInMinutes = Math.floor((end.getTime() - start.getTime()) / (1000 * 60));
-  
+
   if (durationInMinutes < 60) {
     return `${durationInMinutes}分`;
   }
 
   const hours = Math.floor(durationInMinutes / 60);
   const minutes = durationInMinutes % 60;
-  
+
   return `${hours}時間${minutes}分`;
 }
 
@@ -132,15 +127,15 @@ export function formatMatchDuration(
  */
 export function formatRankTier(rankTier: string): string {
   const rankMap: Record<string, string> = {
-    'IRON': 'アイアン',
-    'BRONZE': 'ブロンズ',
-    'SILVER': 'シルバー',
-    'GOLD': 'ゴールド',
-    'PLATINUM': 'プラチナ',
-    'DIAMOND': 'ダイヤモンド',
-    'ASCENDANT': 'アセンダント',
-    'IMMORTAL': 'イモータル',
-    'RADIANT': 'レディアント',
+    IRON: 'アイアン',
+    BRONZE: 'ブロンズ',
+    SILVER: 'シルバー',
+    GOLD: 'ゴールド',
+    PLATINUM: 'プラチナ',
+    DIAMOND: 'ダイヤモンド',
+    ASCENDANT: 'アセンダント',
+    IMMORTAL: 'イモータル',
+    RADIANT: 'レディアント',
   };
 
   return rankMap[rankTier.toUpperCase()] || rankTier;
@@ -151,13 +146,13 @@ export function formatRankTier(rankTier: string): string {
  */
 export function formatGameMode(gameMode: string): string {
   const modeMap: Record<string, string> = {
-    'COMPETITIVE': 'コンペティティブ',
-    'UNRATED': 'アンレート',
-    'DEATHMATCH': 'デスマッチ',
-    'SPIKE_RUSH': 'スパイクラッシュ',
-    'ESCALATION': 'エスカレーション',
-    'TEAM_DEATHMATCH': 'チームデスマッチ',
-    'SWIFTPLAY': 'スイフトプレイ',
+    COMPETITIVE: 'コンペティティブ',
+    UNRATED: 'アンレート',
+    DEATHMATCH: 'デスマッチ',
+    SPIKE_RUSH: 'スパイクラッシュ',
+    ESCALATION: 'エスカレーション',
+    TEAM_DEATHMATCH: 'チームデスマッチ',
+    SWIFTPLAY: 'スイフトプレイ',
   };
 
   return modeMap[gameMode.toUpperCase()] || gameMode;
@@ -188,14 +183,14 @@ export function formatErrorMessage(error: unknown): string {
 export function isImprovement(
   currentValue: number,
   previousValue: number,
-  higherIsBetter = true
+  higherIsBetter = true,
 ): 'improvement' | 'decline' | 'same' {
   if (currentValue === previousValue) {
     return 'same';
   }
 
   const isHigher = currentValue > previousValue;
-  
+
   if (higherIsBetter) {
     return isHigher ? 'improvement' : 'decline';
   } else {
@@ -206,10 +201,7 @@ export function isImprovement(
 /**
  * 変化率を計算
  */
-export function calculateChangePercentage(
-  currentValue: number,
-  previousValue: number
-): number {
+export function calculateChangePercentage(currentValue: number, previousValue: number): number {
   if (previousValue === 0) {
     return currentValue > 0 ? 100 : 0;
   }
@@ -222,7 +214,7 @@ export function calculateChangePercentage(
  */
 export function chunk<T>(array: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
-    array.slice(i * size, i * size + size)
+    array.slice(i * size, i * size + size),
   );
 }
 
@@ -238,8 +230,8 @@ export function unique<T>(array: T[]): T[] {
  */
 export function removeEmptyValues<T extends Record<string, unknown>>(obj: T): Partial<T> {
   return Object.fromEntries(
-    Object.entries(obj).filter(([, value]) => 
-      value !== null && value !== undefined && value !== ''
-    )
+    Object.entries(obj).filter(
+      ([, value]) => value !== null && value !== undefined && value !== '',
+    ),
   ) as Partial<T>;
 }

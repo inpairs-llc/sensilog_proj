@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -6,16 +6,10 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-4">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <Link
-              href="/privacy"
-              className="hover:text-foreground transition-colors"
-            >
+            <Link href="/privacy" className="hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link
-              href="/terms"
-              className="hover:text-foreground transition-colors"
-            >
+            <Link href="/terms" className="hover:text-foreground transition-colors">
               Terms of Service
             </Link>
           </div>
@@ -25,5 +19,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

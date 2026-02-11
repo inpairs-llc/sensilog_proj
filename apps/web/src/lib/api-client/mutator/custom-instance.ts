@@ -52,7 +52,7 @@ if (isBrowser) {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   // レスポンスインターセプター
@@ -69,10 +69,9 @@ if (isBrowser) {
         try {
           const refreshToken = safeLocalStorage.getItem('refreshToken');
           if (refreshToken) {
-            const response = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
-              { refreshToken }
-            );
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
+              refreshToken,
+            });
 
             const { accessToken } = response.data;
             safeLocalStorage.setItem('token', accessToken);
@@ -92,13 +91,13 @@ if (isBrowser) {
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 }
 
 export const customInstance = <T>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ): Promise<T> => {
   const source = axios.CancelToken.source();
   const promise = AXIOS_INSTANCE({

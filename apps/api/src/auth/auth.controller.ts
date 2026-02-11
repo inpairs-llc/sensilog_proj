@@ -1,4 +1,13 @@
-import { Controller, Post, Get, Body, UseGuards, Request, Redirect, Query, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  UseGuards,
+  Request,
+  Redirect,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -8,7 +17,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private configService: ConfigService,
-  ) { }
+  ) {}
 
   /**
    * Riot OAuth認証URLを取得してリダイレクト

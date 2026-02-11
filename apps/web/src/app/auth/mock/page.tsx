@@ -29,8 +29,10 @@ const MOCK_USERS = [
 function MockAuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isLoggingIn, loginError } = useAuth();
+  const { isLoading } = useAuth();
   const [selectedUser, setSelectedUser] = useState<number | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loginError, setLoginError] = useState<Error | null>(null);
 
   const state = searchParams.get('state');
 
@@ -70,46 +72,38 @@ function MockAuthContent() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-md w-full space-y-8'>
-        <div className='text-center'>
-          <h2 className='mt-6 text-3xl font-extrabold text-gray-900'>
-            開発用モック認証
-          </h2>
-          <p className='mt-2 text-sm text-gray-600'>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">開発用モック認証</h2>
+          <p className="mt-2 text-sm text-gray-600">
             テスト用のユーザーアカウントを選択してください
           </p>
-          <div className='mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md'>
-            <p className='text-sm text-yellow-800'>
-              ⚠️ これは開発環境専用の機能です
-            </p>
+          <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-800">⚠️ これは開発環境専用の機能です</p>
           </div>
         </div>
 
-        <div className='space-y-4'>
+        <div className="space-y-4">
           {MOCK_USERS.map((user) => (
             <div
               key={user.id}
-              className='border border-gray-300 rounded-lg p-4 hover:border-blue-500 transition-colors'
+              className="border border-gray-300 rounded-lg p-4 hover:border-blue-500 transition-colors"
             >
-              <div className='flex justify-between items-start'>
-                <div className='flex-1'>
-                  <h3 className='text-lg font-medium text-gray-900'>
-                    {user.name}
-                  </h3>
-                  <p className='text-sm text-gray-500 mt-1'>
-                    {user.description}
-                  </p>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <h3 className="text-lg font-medium text-gray-900">{user.name}</h3>
+                  <p className="text-sm text-gray-500 mt-1">{user.description}</p>
                 </div>
                 <Button
                   onClick={() => handleLogin(user.id)}
-                  disabled={isLoggingIn}
+                  disabled={isLoading}
                   variant={selectedUser === user.id ? 'secondary' : 'default'}
-                  size='sm'
+                  size="sm"
                 >
-                  {selectedUser === user.id && isLoggingIn ? (
+                  {selectedUser === user.id && isLoading ? (
                     <>
-                      <span className='animate-spin mr-2'>⏳</span>
+                      <span className="animate-spin mr-2">⏳</span>
                       ログイン中...
                     </>
                   ) : (
@@ -122,29 +116,27 @@ function MockAuthContent() {
         </div>
 
         {loginError && (
-          <div className='p-3 bg-red-50 border border-red-200 rounded-md'>
-            <p className='text-sm text-red-800'>
-              ログインに失敗しました: {loginError.message}
-            </p>
+          <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+            <p className="text-sm text-red-800">ログインに失敗しました: {loginError.message}</p>
           </div>
         )}
 
-        <div className='text-center'>
-          <Button onClick={handleCancel} variant='ghost' disabled={isLoggingIn}>
+        <div className="text-center">
+          <Button onClick={handleCancel} variant="ghost" disabled={isLoading}>
             キャンセル
           </Button>
         </div>
 
-        <div className='mt-8 p-4 bg-gray-50 border border-gray-200 rounded-md'>
-          <h4 className='text-sm font-medium text-gray-900 mb-2'>開発情報</h4>
-          <dl className='text-xs text-gray-600 space-y-1'>
+        <div className="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-md">
+          <h4 className="text-sm font-medium text-gray-900 mb-2">開発情報</h4>
+          <dl className="text-xs text-gray-600 space-y-1">
             <div>
-              <dt className='inline font-medium'>State:</dt>
-              <dd className='inline ml-1 font-mono'>{state || 'なし'}</dd>
+              <dt className="inline font-medium">State:</dt>
+              <dd className="inline ml-1 font-mono">{state || 'なし'}</dd>
             </div>
             <div>
-              <dt className='inline font-medium'>環境:</dt>
-              <dd className='inline ml-1'>{process.env.NODE_ENV}</dd>
+              <dt className="inline font-medium">環境:</dt>
+              <dd className="inline ml-1">{process.env.NODE_ENV}</dd>
             </div>
           </dl>
         </div>

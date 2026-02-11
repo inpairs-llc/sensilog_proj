@@ -8,13 +8,22 @@ export class MatchDataService {
   constructor(private prisma: PrismaService) {}
 
   async create(userId: string, createMatchDataDto: CreateMatchDataDto) {
-    const { headshotCount, bodyshotCount, legshotCount, kills, deaths, combatScore, roundsPlayed, ...rest } = createMatchDataDto;
-    
+    const {
+      headshotCount,
+      bodyshotCount,
+      legshotCount,
+      kills,
+      deaths,
+      combatScore,
+      roundsPlayed,
+      ...rest
+    } = createMatchDataDto;
+
     const totalShots = headshotCount + bodyshotCount + legshotCount;
     const headshotPercentage = totalShots > 0 ? (headshotCount / totalShots) * 100 : 0;
     const kdRatio = deaths > 0 ? kills / deaths : kills;
     const adr = roundsPlayed > 0 ? combatScore / roundsPlayed : 0;
-    
+
     return this.prisma.matchData.create({
       data: {
         ...rest,
@@ -35,7 +44,7 @@ export class MatchDataService {
 
   async findAll(userId: string, filters?: any) {
     const where: Prisma.MatchDataWhereInput = { userId };
-    
+
     if (filters?.startDate || filters?.endDate) {
       where.gameStartTime = {};
       if (filters.startDate) {
@@ -45,15 +54,15 @@ export class MatchDataService {
         where.gameStartTime.lte = new Date(filters.endDate);
       }
     }
-    
+
     if (filters?.agentName) {
       where.agentName = filters.agentName;
     }
-    
+
     if (filters?.mapName) {
       where.mapName = filters.mapName;
     }
-    
+
     return this.prisma.matchData.findMany({
       where,
       orderBy: { gameStartTime: 'desc' },
@@ -64,11 +73,11 @@ export class MatchDataService {
     const match = await this.prisma.matchData.findFirst({
       where: { id, userId },
     });
-    
+
     if (!match) {
       throw new NotFoundException('Match data not found');
     }
-    
+
     return match;
   }
 
@@ -84,8 +93,8 @@ export class MatchDataService {
   }
 
   async remove(id: string, userId: string) {
-    const match = await this.findOne(id, userId);
-    
+    await this.findOne(id, userId);
+
     return this.prisma.matchData.delete({
       where: { id },
     });
@@ -93,7 +102,7 @@ export class MatchDataService {
 
   async getStats(userId: string, filters?: any) {
     const matches = await this.findAll(userId, filters);
-    
+
     if (matches.length === 0) {
       return {
         totalMatches: 0,
@@ -107,27 +116,31 @@ export class MatchDataService {
         winRate: 0,
       };
     }
-    
-    const stats = matches.reduce((acc, match) => ({
-      totalMatches: acc.totalMatches + 1,
-      totalKills: acc.totalKills + match.kills,
-      totalDeaths: acc.totalDeaths + match.deaths,
-      totalAssists: acc.totalAssists + match.assists,
-      totalWins: acc.totalWins + (match.teamWon ? 1 : 0),
-      totalHeadshotPercentage: acc.totalHeadshotPercentage + (match.headshotPercentage?.toNumber() || 0),
-      totalCombatScore: acc.totalCombatScore + (match.combatScore?.toNumber() || 0),
-      totalAdr: acc.totalAdr + (match.adr?.toNumber() || 0),
-    }), {
-      totalMatches: 0,
-      totalKills: 0,
-      totalDeaths: 0,
-      totalAssists: 0,
-      totalWins: 0,
-      totalHeadshotPercentage: 0,
-      totalCombatScore: 0,
-      totalAdr: 0,
-    });
-    
+
+    const stats = matches.reduce(
+      (acc, match) => ({
+        totalMatches: acc.totalMatches + 1,
+        totalKills: acc.totalKills + match.kills,
+        totalDeaths: acc.totalDeaths + match.deaths,
+        totalAssists: acc.totalAssists + match.assists,
+        totalWins: acc.totalWins + (match.teamWon ? 1 : 0),
+        totalHeadshotPercentage:
+          acc.totalHeadshotPercentage + (match.headshotPercentage?.toNumber() || 0),
+        totalCombatScore: acc.totalCombatScore + (match.combatScore?.toNumber() || 0),
+        totalAdr: acc.totalAdr + (match.adr?.toNumber() || 0),
+      }),
+      {
+        totalMatches: 0,
+        totalKills: 0,
+        totalDeaths: 0,
+        totalAssists: 0,
+        totalWins: 0,
+        totalHeadshotPercentage: 0,
+        totalCombatScore: 0,
+        totalAdr: 0,
+      },
+    );
+
     return {
       totalMatches: stats.totalMatches,
       avgKills: stats.totalKills / stats.totalMatches,

@@ -1,29 +1,30 @@
-import "@/lib/fix-ssr-storage";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "@/lib/providers";
+import '@/lib/fix-ssr-storage';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/lib/providers';
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "SensiLog - VALORANT感度管理",
-  description: "VALORANTプレイヤーのための感度・設定管理ツール。パフォーマンス分析とデバイス設定の最適化をサポートします。",
-  keywords: "VALORANT,感度,設定,ゲーミング,eスポーツ,FPS,パフォーマンス分析",
-  authors: [{ name: "SensiLog Team" }],
+  title: 'SensiLog - VALORANT感度管理',
+  description:
+    'VALORANTプレイヤーのための感度・設定管理ツール。パフォーマンス分析とデバイス設定の最適化をサポートします。',
+  keywords: 'VALORANT,感度,設定,ゲーミング,eスポーツ,FPS,パフォーマンス分析',
+  authors: [{ name: 'SensiLog Team' }],
   openGraph: {
-    title: "SensiLog - VALORANT感度管理",
-    description: "VALORANTプレイヤーのための感度・設定管理ツール",
-    type: "website",
-    locale: "ja_JP",
+    title: 'SensiLog - VALORANT感度管理',
+    description: 'VALORANTプレイヤーのための感度・設定管理ツール',
+    type: 'website',
+    locale: 'ja_JP',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "SensiLog - VALORANT感度管理",
-    description: "VALORANTプレイヤーのための感度・設定管理ツール",
+    card: 'summary_large_image',
+    title: 'SensiLog - VALORANT感度管理',
+    description: 'VALORANTプレイヤーのための感度・設定管理ツール',
   },
   robots: {
     index: true,
