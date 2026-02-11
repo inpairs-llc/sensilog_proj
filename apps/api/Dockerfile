@@ -1,46 +1,34 @@
-# Build stage
 FROM node:20-alpine AS builder
-
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Copy root package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY turbo.json ./
-
-# Copy app and packages
-COPY apps/api ./apps/api
-COPY packages ./packages
-
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Copy package file and install dependencies
+COPY package.json ./
+RUN npm install
 
 # Generate Prisma client
-WORKDIR /app/apps/api
-RUN pnpm prisma generate
+COPY prisma ./prisma
+RUN npx prisma generate
 
-# Build the application
-RUN pnpm build
+# Copy source and config, then build
+COPY tsconfig.json tsconfig.build.json nest-cli.json ./
+COPY src ./src
+RUN npm run build
 
 # Production stage
 FROM node:20-alpine
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
 WORKDIR /app
 
-# Copy built application
-COPY --from=builder /app/apps/api/dist ./dist
-COPY --from=builder /app/apps/api/package.json ./
-COPY --from=builder /app/apps/api/prisma ./prisma
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/api/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/prisma ./prisma
+
+# Install production dependencies only
+RUN npm install --omit=dev
 
 # Generate Prisma client in production
-RUN pnpm prisma generate
+RUN npx prisma generate
 
 EXPOSE 3001
 

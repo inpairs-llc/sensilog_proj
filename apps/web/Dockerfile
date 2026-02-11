@@ -6,10 +6,10 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # 依存関係のコピーとインストール
-COPY package.json pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/web/package.json ./apps/web/
-COPY packages/api-client/package.json ./packages/api-client/
+COPY apps/api/package.json ./apps/api/
+COPY packages/db/package.json ./packages/db/
 
 # 依存関係をインストール
 RUN pnpm install --frozen-lockfile
