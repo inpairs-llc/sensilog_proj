@@ -13,7 +13,7 @@
     "build:web": "pnpm --filter web build",
     "build:api": "pnpm --filter api build",
     "start:api": "pnpm --filter api start",
-    "lint": "pnpm -r run lint",
+    "lint": "pnpm -r run lint --fix",
     "type-check": "pnpm -r run type-check",
     "format": "prettier --write \"apps/*/src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"apps/*/src/**/*.{ts,tsx}\"",
