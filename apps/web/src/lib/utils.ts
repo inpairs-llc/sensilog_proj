@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { AxiosError } from 'axios';
 
 /**
  * Tailwind CSSクラスをマージするユーティリティ
@@ -164,10 +163,6 @@ export function formatGameMode(gameMode: string): string {
 export function formatErrorMessage(error: unknown): string {
   if (typeof error === 'string') {
     return error;
-  }
-
-  if (error instanceof AxiosError && error.response?.data?.error) {
-    return error.response.data.error as string;
   }
 
   if (error instanceof Error && error.message) {

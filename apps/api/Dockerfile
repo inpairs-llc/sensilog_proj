@@ -27,6 +27,7 @@ COPY --from=builder /app/prisma ./prisma
 
 RUN npm install --omit=dev
 RUN npx prisma generate
+RUN mkdir -p graphql
 
 EXPOSE 3001
 

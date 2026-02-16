@@ -21,7 +21,7 @@
     "db:studio": "pnpm --filter api exec prisma studio",
     "db:generate": "pnpm --filter api exec prisma generate",
     "db:migrate": "pnpm --filter api exec prisma migrate dev",
-    "generate:api": "./scripts/generate-api.sh"
+    "generate:gql": "pnpm --filter web exec graphql-codegen --config codegen.ts"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

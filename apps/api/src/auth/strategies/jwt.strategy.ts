@@ -4,6 +4,13 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../prisma/prisma.service';
 
+interface JwtPayload {
+  sub: string;
+  gameName: string;
+  iat: number;
+  exp: number;
+}
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -17,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: JwtPayload) {
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
     });
@@ -28,11 +35,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     return {
       id: user.id,
-      email: user.email,
+      riotId: user.riotId,
       gameName: user.gameName,
       tagLine: user.tagLine,
       riotPuuid: user.riotPuuid,
-      isAdmin: user.isAdmin,
     };
   }
 }

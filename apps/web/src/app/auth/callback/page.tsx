@@ -2,7 +2,19 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { apiUtils } from '@/lib/api-client/mutator/custom-instance';
+import { client } from '@/gql/baseApi';
+import { RIOT_CALLBACK } from '@/gql/index';
+
+interface RiotCallbackResponse {
+  riotCallback: {
+    accessToken: string;
+    user: {
+      id: string;
+      gameName: string;
+      tagLine: string;
+    };
+  };
+}
 
 function CallbackContent() {
   const router = useRouter();
@@ -16,14 +28,12 @@ function CallbackContent() {
       const error = searchParams.get('error');
       const errorDescription = searchParams.get('error_description');
 
-      // エラーがある場合
       if (error) {
         setStatus('error');
         setErrorMessage(errorDescription || error || '認証に失敗しました');
         return;
       }
 
-      // codeがない場合
       if (!code) {
         setStatus('error');
         setErrorMessage('認証コードが見つかりません');
@@ -31,31 +41,14 @@ function CallbackContent() {
       }
 
       try {
-        // バックエンドにcodeを送信してtokenを取得
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-        const response = await fetch(`${apiUrl}/auth/riot/callback`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        });
+        const data = await client.request<RiotCallbackResponse>(RIOT_CALLBACK, { code });
 
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || '認証に失敗しました');
-        }
-
-        const data = await response.json();
-
-        // トークンを保存
-        if (data.accessToken) {
-          apiUtils.setAuthToken(data.accessToken);
+        if (data.riotCallback.accessToken) {
+          localStorage.setItem('auth_token', data.riotCallback.accessToken);
         }
 
         setStatus('success');
 
-        // 保存されたリダイレクト先、またはダッシュボードにリダイレクト
         setTimeout(() => {
           const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/dashboard';
           sessionStorage.removeItem('redirectAfterLogin');
@@ -82,7 +75,7 @@ function CallbackContent() {
 
         {status === 'success' && (
           <div className="space-y-4">
-            <div className="text-green-500 text-5xl">✓</div>
+            <div className="text-green-500 text-5xl">&#x2713;</div>
             <p className="text-white text-lg">認証成功！</p>
             <p className="text-gray-400">ダッシュボードにリダイレクトしています...</p>
           </div>
@@ -90,7 +83,7 @@ function CallbackContent() {
 
         {status === 'error' && (
           <div className="space-y-4">
-            <div className="text-red-500 text-5xl">✕</div>
+            <div className="text-red-500 text-5xl">&#x2715;</div>
             <p className="text-white text-lg">認証に失敗しました</p>
             <p className="text-gray-400">{errorMessage}</p>
             <button
