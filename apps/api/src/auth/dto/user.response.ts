@@ -14,6 +14,6 @@ export class UserResponse {
   @Field()
   tagLine: string;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   riotPuuid?: string | null;
 }
