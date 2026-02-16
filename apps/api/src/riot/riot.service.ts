@@ -1,53 +1,51 @@
 import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosError } from 'axios';
-
-interface RiotTokenResponse {
-  access_token: string;
-  refresh_token: string;
-  expires_in: number;
-  token_type: string;
-  id_token?: string;
-}
-
-interface RiotAccountInfo {
-  puuid: string;
-  gameName: string;
-  tagLine: string;
-}
+import { RiotTokenResponse, RiotAccountInfo } from './riot.types';
 
 @Injectable()
 export class RiotService {
   private readonly logger = new Logger(RiotService.name);
   private readonly tokenUrl = 'https://auth.riotgames.com/token';
   private readonly accountUrl = 'https://americas.api.riotgames.com/riot/account/v1/accounts/me';
+  private readonly clientId: string;
+  private readonly clientSecret: string;
+  private readonly redirectUri: string;
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) {
+    this.clientId = this.configService.get<string>('RIOT_CLIENT_ID')!;
+    this.clientSecret = this.configService.get<string>('RIOT_CLIENT_SECRET')!;
+    const frontendUrl = this.configService.get<string>('FRONTEND_URL')!;
+    this.redirectUri = `${frontendUrl}/auth/callback`;
+  }
+
+  /**
+   * Riot OAuth認可URLを生成
+   */
+  buildAuthUrl(): string {
+    const url = new URL('https://auth.riotgames.com/authorize');
+    url.searchParams.append('client_id', this.clientId);
+    url.searchParams.append('redirect_uri', this.redirectUri);
+    url.searchParams.append('response_type', 'code');
+    url.searchParams.append('scope', 'openid');
+    return url.toString();
+  }
 
   /**
    * OAuth authorization codeをaccess_tokenに交換
    */
   async exchangeCodeForToken(code: string): Promise<RiotTokenResponse> {
-    const clientId = this.configService.get<string>('RIOT_CLIENT_ID');
-    const clientSecret = this.configService.get<string>('RIOT_CLIENT_SECRET');
-    const frontendUrl = this.configService.get<string>('FRONTEND_URL');
-    const redirectUri = `${frontendUrl}/auth/callback`;
-
-    if (!clientId || !clientSecret) {
-      throw new UnauthorizedException('Riot OAuth credentials not configured');
-    }
-
     try {
-      this.logger.debug(`Exchanging code for token with redirect_uri: ${redirectUri}`);
+      this.logger.debug(`Exchanging code for token with redirect_uri: ${this.redirectUri}`);
 
       const response = await axios.post<RiotTokenResponse>(
         this.tokenUrl,
         new URLSearchParams({
           grant_type: 'authorization_code',
           code: code,
-          redirect_uri: redirectUri,
-          client_id: clientId,
-          client_secret: clientSecret,
+          redirect_uri: this.redirectUri,
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
         }),
         {
           headers: {
@@ -105,13 +103,6 @@ export class RiotService {
    * Refresh tokenを使って新しいaccess_tokenを取得
    */
   async refreshAccessToken(refreshToken: string): Promise<RiotTokenResponse> {
-    const clientId = this.configService.get<string>('RIOT_CLIENT_ID');
-    const clientSecret = this.configService.get<string>('RIOT_CLIENT_SECRET');
-
-    if (!clientId || !clientSecret) {
-      throw new UnauthorizedException('Riot OAuth credentials not configured');
-    }
-
     try {
       this.logger.debug('Refreshing access token');
 
@@ -120,8 +111,8 @@ export class RiotService {
         new URLSearchParams({
           grant_type: 'refresh_token',
           refresh_token: refreshToken,
-          client_id: clientId,
-          client_secret: clientSecret,
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
         }),
         {
           headers: {

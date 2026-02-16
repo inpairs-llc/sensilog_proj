@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
-import { RiotService } from './riot.service';
+import { RiotService } from '../riot/riot.service';
 import { User } from '@prisma/client';
 
 @Injectable()

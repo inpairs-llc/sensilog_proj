@@ -3,22 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { client } from '@/gql/baseApi';
 import { RIOT_AUTH_URL, ME } from '@/gql/index';
+import { AuthUser, RiotAuthUrlResponse, MeResponse } from '@/types/auth';
 
-export interface AuthUser {
-  id: string;
-  riotId?: string;
-  gameName: string;
-  tagLine: string;
-  riotPuuid?: string | null;
-}
-
-interface RiotAuthUrlResponse {
-  riotAuthUrl: { authUrl: string };
-}
-
-interface MeResponse {
-  me: AuthUser;
-}
+export type { AuthUser } from '@/types/auth';
 
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);

@@ -5,9 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { GqlAuthGuard } from './guards/gql-auth.guard';
-import { RiotService } from './riot.service';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { GqlAuthGuard } from '../common/guards/gql-auth.guard';
 
 @Module({
   imports: [
@@ -21,14 +20,7 @@ import { RiotService } from './riot.service';
       inject: [ConfigService],
     }),
   ],
-  providers: [
-    AuthService,
-    AuthResolver,
-    RiotService,
-    JwtStrategy,
-    JwtAuthGuard,
-    GqlAuthGuard,
-  ],
-  exports: [AuthService, RiotService, JwtAuthGuard, GqlAuthGuard],
+  providers: [AuthService, AuthResolver, JwtStrategy, JwtAuthGuard, GqlAuthGuard],
+  exports: [AuthService, JwtAuthGuard, GqlAuthGuard],
 })
 export class AuthModule {}
