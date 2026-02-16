@@ -43,8 +43,9 @@ export function useAuth() {
       const data = await client.request<RiotAuthUrlResponse>(RIOT_AUTH_URL);
       window.location.href = data.riotAuthUrl.authUrl;
     } catch (err) {
-      console.error('Failed to start Riot login:', err);
-      throw err;
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      console.error('Failed to start Riot login:', message);
+      throw new Error(message);
     }
   }, []);
 

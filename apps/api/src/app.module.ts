@@ -21,7 +21,9 @@ import { RiotModule } from './riot/riot.module';
         RIOT_CLIENT_SECRET: Joi.string().required(),
         FRONTEND_URL: Joi.string().uri().required(),
         PORT: Joi.number().default(3001),
-        NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
+        NODE_ENV: Joi.string()
+          .valid('development', 'staging', 'production', 'test')
+          .default('development'),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

@@ -18,8 +18,7 @@ export function LoginButton({ className, variant = 'default', size = 'md' }: Log
     setIsLoading(true);
     try {
       await startRiotLogin();
-    } catch (error) {
-      console.error('Login failed:', error);
+    } catch {
       setIsLoading(false);
     }
   };
