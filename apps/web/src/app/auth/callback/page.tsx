@@ -56,7 +56,9 @@ function CallbackContent() {
         }, 1000);
       } catch {
         setStatus('error');
-        setErrorMessage('認証処理中にエラーが発生しました。しばらくしてからもう一度お試しください。');
+        setErrorMessage(
+          '認証処理中にエラーが発生しました。しばらくしてからもう一度お試しください。',
+        );
       }
     };
 
