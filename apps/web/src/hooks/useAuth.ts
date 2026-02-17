@@ -25,7 +25,9 @@ export function useAuth() {
       }
 
       try {
-        const data = await client.request<MeResponse>(ME);
+        const data = await client.request<MeResponse>(ME, undefined, {
+          Authorization: `Bearer ${token}`,
+        });
         setUser(data.me);
       } catch {
         localStorage.removeItem('auth_token');
@@ -58,7 +60,10 @@ export function useAuth() {
 
   const refetch = useCallback(async () => {
     try {
-      const data = await client.request<MeResponse>(ME);
+      const token = localStorage.getItem('auth_token');
+      const data = await client.request<MeResponse>(ME, undefined, {
+        Authorization: `Bearer ${token}`,
+      });
       setUser(data.me);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch user'));
