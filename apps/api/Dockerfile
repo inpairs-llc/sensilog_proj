@@ -21,12 +21,13 @@ RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/prisma ./prisma/
 
 RUN npm install --omit=dev
 RUN npx prisma generate
+
+COPY --from=builder /app/dist ./dist
 RUN mkdir -p graphql
 
 EXPOSE 3001
