@@ -54,9 +54,9 @@ function CallbackContent() {
           sessionStorage.removeItem('redirectAfterLogin');
           router.push(redirectUrl);
         }, 1000);
-      } catch (err) {
+      } catch {
         setStatus('error');
-        setErrorMessage(err instanceof Error ? err.message : '認証処理中にエラーが発生しました');
+        setErrorMessage('認証処理中にエラーが発生しました。しばらくしてからもう一度お試しください。');
       }
     };
 
