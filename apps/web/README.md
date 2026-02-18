@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SensiLog Web
 
-## Getting Started
+Next.js 15 (App Router) + React 19 フロントエンド。
 
-First, run the development server:
+## 技術スタック
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 15** (App Router) + React 19 + TypeScript
+- **スタイリング**: Tailwind CSS v4
+- **状態管理**: RTK Query + `graphql-request`
+- **GraphQL コード生成**: `@graphql-codegen/typescript-rtk-query`
+- **認証**: Riot OAuth (JWT トークンを localStorage に保存)
+
+## ページ構成
+
+```
+src/app/
+  page.tsx                    # ランディングページ
+  layout.tsx                  # ルートレイアウト
+  auth/
+    callback/page.tsx         # Riot OAuth コールバック
+  (protected)/                # 認証必須 (AuthGuard)
+    dashboard/page.tsx        # ダッシュボード
+    matches/page.tsx          # 試合履歴
+    analytics/page.tsx        # パフォーマンス分析
+    settings/page.tsx         # ユーザー設定
+  (public)/
+    privacy/page.tsx          # プライバシーポリシー
+    terms/page.tsx            # 利用規約
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 主要ディレクトリ
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  components/auth/   # AuthGuard, LoginButton
+  hooks/useAuth.ts   # 認証フック (ログイン, ログアウト, me クエリ)
+  gql/               # GraphQL クライアント, クエリ, コード生成出力
+  lib/               # ユーティリティ (フォーマット, VALORANT ヘルパー)
+  types/             # 共有型定義
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 環境変数
 
-## Learn More
+| 変数名 | 必須 | 説明 |
+|--------|------|------|
+| `NEXT_PUBLIC_API_URL` | はい | バックエンド API の URL (例: `http://localhost:3001`) |
 
-To learn more about Next.js, take a look at the following resources:
+## 開発
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev              # next dev (:3000)
+pnpm build            # next build
+pnpm type-check       # tsc --noEmit
+pnpm generate:gql     # GraphQL 型を再生成 (バックエンド起動が必要)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 認証フロー
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. ユーザーがログインボタンをクリック → `useAuth().startRiotLogin()` → Riot OAuth にリダイレクト
+2. Riot が `/auth/callback?code=...` にリダイレクト
+3. コールバックページが `riotCallback` ミューテーションを実行 → JWT を localStorage に保存
+4. `/dashboard` にリダイレクト → `AuthGuard` が `me` クエリで認証を検証
